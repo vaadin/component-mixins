@@ -915,6 +915,13 @@
   resolved "https://registry.yarnpkg.com/@open-wc/testing-helpers/-/testing-helpers-1.2.1.tgz#eecba5ccfe808f9667caf149e68cd80d781f28e0"
   integrity sha512-FZBjqM81GQc+Q8W4YdWNwwk64+PW6frCvHyeov5ivCR2K7SJXwTPRcQIi0qU/6VVRVDlQeQ39PH8oSnjnIYpvQ==
 
+"@polymer/iron-test-helpers@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-test-helpers/-/iron-test-helpers-3.0.1.tgz#ec2b9c6567e2967a191b3d800a04b1167b2d1394"
+  integrity sha512-2R7dnGcW2eg95i7LhYWWUO4AlAk6qXsPnKoyeN2R1t0km0ECMx0jjwqeLwCo8/7LwuVPZSiarI4DK7jyU7fJLQ==
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
 "@polymer/polymer@^3.0.0", "@polymer/polymer@^3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@polymer/polymer/-/polymer-3.3.0.tgz#52a0665ac29654728e8f46e8ee178c02c49efdd0"

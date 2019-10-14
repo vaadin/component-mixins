@@ -1,0 +1,19 @@
+{
+  "name": "@vaadin/control-state-mixin",
+  "version": "0.0.0",
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "main": "control-state-mixin.js",
+  "module": "control-state-mixin.js",
+  "dependencies": {
+    "lit-element": "^2.0.0",
+    "lit-html": "^1.0.0"
+  },
+  "devDependencies": {
+    "@open-wc/testing-helpers": "^1.2.1",
+    "@vaadin/test-helpers": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

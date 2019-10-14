@@ -1,0 +1,12 @@
+{
+  "name": "@vaadin/test-helpers",
+  "private": true,
+  "version": "0.1.0",
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "module": "index.js",
+  "dependencies": {
+    "@polymer/iron-test-helpers": "^3.0.1"
+  }
+}

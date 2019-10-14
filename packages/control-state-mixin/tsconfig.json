@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "outDir": ".",
+  "compilerOptions": {
+    "composite": true
+  },
+  "include": [
+    "control-state-mixin.ts"
+  ]
+}
