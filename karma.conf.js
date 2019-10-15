@@ -1,5 +1,3 @@
-const path = require('path');
-
 const USING_TRAVIS = Boolean(process.env.TRAVIS);
 const USING_SL = Boolean(process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY);
 
@@ -25,10 +23,10 @@ const HEADLESS_LAUNCHERS = {
 };
 
 function determineBrowsers() {
-  if (!USING_TRAVIS) {
-    return ['Chrome', 'Firefox'];
-  }
   const browsers = [...Object.keys(HEADLESS_LAUNCHERS)];
+  if (!USING_TRAVIS) {
+    return browsers;
+  }
   if (USING_SL) {
     browsers.push(...Object.keys(SL_LAUNCHERS));
   }
@@ -38,13 +36,13 @@ function determineBrowsers() {
 module.exports = config => {
   config.set({
     basePath: '',
-    frameworks: ['mocha', 'chai', 'sinon'],
+    frameworks: ['esm', 'mocha', 'chai', 'sinon', 'source-map-support'],
 
     browsers: determineBrowsers(),
     browserDisconnectTimeout: 300000,
     browserNoActivityTimeout: 360000,
     captureTimeout: 420000,
-    concurrency: USING_SL ? 10 : 1,
+
     customLaunchers: { ...SL_LAUNCHERS, ...HEADLESS_LAUNCHERS },
 
     client: {
@@ -57,20 +55,28 @@ module.exports = config => {
       }
     },
 
-    files: ['test/index.ts'],
+    files: [{ pattern: 'packages/**/*.test.ts', type: 'module' }],
 
-    preprocessors: {
-      'test/index.ts': ['webpack', 'sourcemap']
-    },
+    plugins: [
+      // load plugin
+      require.resolve('@open-wc/karma-esm'),
+
+      // fallback: resolve any karma- plugins
+      'karma-*'
+    ],
 
     reporters: ['mocha', 'coverage-istanbul'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
 
+    mochaReporter: {
+      showDiff: true
+    },
+
     coverageIstanbulReporter: {
       reports: ['html', 'lcovonly', 'text-summary'],
-      dir: path.join(__dirname, 'coverage'),
+      dir: 'coverage',
       combineBrowserReports: true,
       skipFilesWithNoCoverage: true,
       thresholds: {
@@ -83,47 +89,30 @@ module.exports = config => {
       }
     },
 
-    webpack: {
-      devtool: 'inline-source-map',
-      mode: 'development',
-      resolve: {
-        // Enable resolving .ts imports files without extensions
-        extensions: ['.ts', '.js'],
-
-        // Prefer ES module dependencies when declared in package.json
-        mainFields: ['es2015', 'module', 'main']
-      },
-      module: {
-        rules: [
-          {
-            test: /\.ts$/,
-            loader: 'awesome-typescript-loader',
-            options: {
-              silent: true,
-              useCache: true,
-              cacheDirectory: 'node_modules/.cache/awesome-typescript-loader'
+    esm: {
+      coverage: true,
+      babel: true,
+      nodeResolve: true,
+      fileExtensions: ['.ts'],
+      compatibility: 'esm',
+      babelModernExclude: [
+        '**/node_modules/sinon/**/*',
+        '**/node_modules/mocha/**/*',
+        '**/node_modules/chai/**/*',
+        '**/node_modules/sinon/chai/**/*'
+      ],
+      customBabelConfig: {
+        plugins: [
+          [
+            '@babel/plugin-proposal-decorators',
+            {
+              decoratorsBeforeExport: true
             }
-          },
-          {
-            test: /\.ts$/,
-            loader: 'istanbul-instrumenter-loader',
-            enforce: 'post',
-            include: path.resolve('./packages'),
-            exclude: /node_modules|\.test\.ts$/,
-            options: {
-              esModules: true
-            }
-          }
-        ]
+          ],
+          '@babel/plugin-proposal-class-properties'
+        ],
+        presets: ['@babel/preset-typescript']
       }
-    },
-
-    webpackMiddleware: {
-      stats: 'errors-only'
-    },
-
-    webpackServer: {
-      noInfo: true
     }
   });
 
@@ -138,6 +127,7 @@ module.exports = config => {
         accessKey: process.env.SAUCE_ACCESS_KEY
       },
       // Attempt to de-flake Sauce Labs tests on Travis CI.
+      concurrency: 10,
       transports: ['polling'],
       browserDisconnectTolerance: 3,
       reporters: ['saucelabs', 'mocha']
