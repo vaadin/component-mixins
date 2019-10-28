@@ -1762,12 +1762,33 @@
     lodash.unescape "4.0.1"
     semver "^6.3.0"
 
+"@vaadin/vaadin-development-mode-detector@^2.0.0":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-development-mode-detector/-/vaadin-development-mode-detector-2.0.4.tgz#f49c8009856bead92d248377c36b295b5aae78e5"
+  integrity sha512-S+PaFrZpK8uBIOnIHxjntTrgumd5ztuCnZww96ydGKXgo9whXfZsbMwDuD/102a/IuPUMyF+dh/n3PbWzJ6igA==
+
+"@vaadin/vaadin-element-mixin@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-element-mixin/-/vaadin-element-mixin-2.1.4.tgz#d9bc24b8866658c9a4a5f7e94bada7cc8dc6433d"
+  integrity sha512-ZSHrmf5ACKwfsPRymCh3CNJEUaXiYv5xG+Pkiek+J4tUSxChK0TTOuj6RPdPYGn7r3ZZY8BmiFlOzlPqLItY8A==
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+    "@vaadin/vaadin-development-mode-detector" "^2.0.0"
+    "@vaadin/vaadin-usage-statistics" "^2.0.4"
+
 "@vaadin/vaadin-themable-mixin@^1.5.1":
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/@vaadin/vaadin-themable-mixin/-/vaadin-themable-mixin-1.5.1.tgz#4b74625987ac350ba2083d3e0387518febd5f7b9"
   integrity sha512-wZIafKCeLaQw5v0EmrgXG4okyMeX4EhyGp192AXjLmJttzxViq0JF2YFGxDM80PcoA30q1P2PW0VLtrJNp5btg==
   dependencies:
     "@polymer/polymer" "^3.0.0"
+
+"@vaadin/vaadin-usage-statistics@^2.0.4":
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-usage-statistics/-/vaadin-usage-statistics-2.0.11.tgz#6712d389089f248d2865ed2d74c665103b354378"
+  integrity sha512-6isKfOQnb6BSj181nehId4w8SOUKDLNcNza1RKdiNGgnOlqjZx/p4+FbJS9PQ4q0lwP1/TQa3Vx7SAWdoVfNOQ==
+  dependencies:
+    "@vaadin/vaadin-development-mode-detector" "^2.0.0"
 
 "@webcomponents/shadycss@^1.9.1":
   version "1.9.2"

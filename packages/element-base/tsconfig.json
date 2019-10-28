@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "outDir": ".",
+  "compilerOptions": {
+    "composite": true
+  },
+  "include": [
+    "vaadin-element.ts",
+    "custom_typings/*.d.ts"
+  ]
+}
