@@ -10,6 +10,11 @@
   },
   "main": "vaadin-element.js",
   "module": "vaadin-element.js",
+  "files": [
+    "custom_typings/",
+    "vaadin-element.d.ts*",
+    "vaadin-element.js*"
+  ],
   "dependencies": {
     "@polymer/polymer": "^3.3.0",
     "@vaadin/vaadin-element-mixin": "^2.1.4",

@@ -10,6 +10,10 @@
   },
   "main": "control-state-mixin.js",
   "module": "control-state-mixin.js",
+  "files": [
+    "control-state-mixin.d.ts*",
+    "control-state-mixin.js*"
+  ],
   "dependencies": {
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"

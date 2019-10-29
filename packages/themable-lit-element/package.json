@@ -10,6 +10,11 @@
   },
   "main": "themable-lit-element.js",
   "module": "themable-lit-element.js",
+  "files": [
+    "custom_typings/",
+    "themable-lit-element.d.ts*",
+    "themable-lit-element.js*"
+  ],
   "dependencies": {
     "@polymer/polymer": "^3.3.0",
     "@vaadin/vaadin-themable-mixin": "^1.5.1",
