@@ -1,7 +1,7 @@
 import { fixture } from '@open-wc/testing-helpers';
 import * as Vaadin from '@vaadin/vaadin-themable-mixin/register-styles.js';
 import { html, css } from 'lit-element';
-import { ThemableLitElement } from '../themable-lit-element';
+import { ThemableElement } from '../themable-element';
 
 const { expect } = chai;
 
@@ -122,7 +122,7 @@ Vaadin.registerStyles(
   { moduleId: 'material-override-styles' }
 );
 
-class LitFoo extends ThemableLitElement {
+class LitFoo extends ThemableElement {
   static is = foo;
 
   static styles = css`
@@ -140,7 +140,7 @@ class LitFoo extends ThemableLitElement {
 
 customElements.define(foo, LitFoo);
 
-class LitBar extends ThemableLitElement {
+class LitBar extends ThemableElement {
   static is = bar;
 
   render() {
@@ -158,7 +158,7 @@ class LitBaz extends LitBar {
 
 customElements.define(baz, LitBaz);
 
-class LitOverride extends ThemableLitElement {
+class LitOverride extends ThemableElement {
   static is = override;
 
   render() {
@@ -170,12 +170,12 @@ class LitOverride extends ThemableLitElement {
 
 customElements.define(override, LitOverride);
 
-describe('ThemableLitElement', () => {
+describe('ThemableElement', () => {
   let wrapper;
   let components: Array<Element> = [];
 
   const getPart = (idx: number) => {
-    return (components[idx] as ThemableLitElement).renderRoot.querySelector('#text') as Element;
+    return (components[idx] as ThemableElement).renderRoot.querySelector('#text') as Element;
   };
 
   beforeEach(async () => {

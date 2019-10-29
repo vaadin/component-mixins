@@ -1,6 +1,6 @@
 import { registerStyles, css, unsafeCSS } from '@vaadin/vaadin-themable-mixin/register-styles.js';
 import { html } from 'lit-element';
-import { ThemableLitElement } from '../themable-lit-element';
+import { ThemableElement } from '../themable-element';
 
 const { expect } = chai;
 
@@ -8,7 +8,7 @@ let attachedInstances: Array<HTMLElement> = [];
 function define(customElementName: string) {
   customElements.define(
     customElementName,
-    class extends ThemableLitElement {
+    class extends ThemableElement {
       static is = customElementName;
 
       render() {
@@ -22,7 +22,7 @@ function define(customElementName: string) {
 
 async function defineAndInstantiate(customElementName: string) {
   define(customElementName);
-  const instance = document.createElement(customElementName) as ThemableLitElement;
+  const instance = document.createElement(customElementName) as ThemableElement;
   document.body.appendChild(instance);
   await instance.updateComplete;
   attachedInstances.push(instance);

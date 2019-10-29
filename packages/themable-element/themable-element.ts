@@ -28,7 +28,7 @@ const sortModules = (modules: Array<{ [s: string]: DomModule }>) => {
   });
 };
 
-export class ThemableLitElement extends LitElement {
+export class ThemableElement extends LitElement {
   protected static is: string;
 
   static finalize() {

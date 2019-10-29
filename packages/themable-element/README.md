@@ -1,6 +1,6 @@
-# @vaadin/themable-lit-element
+# @vaadin/themable-element
 
-This package provides `ThemableLitElement`, a version of [Vaadin.ThemableMixin](https://github.com/vaadin/vaadin-themable-mixin) re-implemented using [LitElement](https://github.com/Polymer/lit-element).
+This package provides `ThemableElement`, a version of [Vaadin.ThemableMixin](https://github.com/vaadin/vaadin-themable-mixin) re-implemented using [LitElement](https://github.com/Polymer/lit-element).
 
 ## Usage
 

@@ -1,19 +1,19 @@
 {
-  "name": "@vaadin/themable-lit-element",
+  "name": "@vaadin/themable-element",
   "version": "0.0.0",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/vaadin/component-mixins.git",
-    "directory": "packages/themable-lit-element"
+    "directory": "packages/themable-element"
   },
-  "main": "themable-lit-element.js",
-  "module": "themable-lit-element.js",
+  "main": "themable-element.js",
+  "module": "themable-element.js",
   "files": [
     "custom_typings/",
-    "themable-lit-element.d.ts*",
-    "themable-lit-element.js*"
+    "themable-element.d.ts*",
+    "themable-element.js*"
   ],
   "dependencies": {
     "@polymer/polymer": "^3.3.0",
