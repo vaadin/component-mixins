@@ -1,6 +1,6 @@
 {
   "name": "@vaadin/element-base",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "repository": {
@@ -17,8 +17,8 @@
   ],
   "dependencies": {
     "@polymer/polymer": "^3.3.0",
+    "@vaadin/themable-element": "^0.1.0",
     "@vaadin/vaadin-element-mixin": "^2.1.4",
-    "@vaadin/themable-element": "^0.0.0",
     "lit-element": "^2.0.0"
   },
   "devDependencies": {
