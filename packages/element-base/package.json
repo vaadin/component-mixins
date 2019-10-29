@@ -1,0 +1,30 @@
+{
+  "name": "@vaadin/element-base",
+  "version": "0.1.0",
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaadin/component-mixins.git",
+    "directory": "packages/element-base"
+  },
+  "main": "vaadin-element.js",
+  "module": "vaadin-element.js",
+  "files": [
+    "custom_typings/",
+    "vaadin-element.d.ts*",
+    "vaadin-element.js*"
+  ],
+  "dependencies": {
+    "@polymer/polymer": "^3.3.0",
+    "@vaadin/themable-element": "^0.1.0",
+    "@vaadin/vaadin-element-mixin": "^2.1.4",
+    "lit-element": "^2.0.0"
+  },
+  "devDependencies": {
+    "@open-wc/testing-helpers": "^1.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
