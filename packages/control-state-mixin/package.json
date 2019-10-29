@@ -3,6 +3,11 @@
   "version": "0.0.0",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaadin/component-mixins.git",
+    "directory": "packages/control-state-mixin"
+  },
   "main": "control-state-mixin.js",
   "module": "control-state-mixin.js",
   "dependencies": {

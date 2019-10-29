@@ -3,6 +3,11 @@
   "version": "0.0.0",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaadin/component-mixins.git",
+    "directory": "packages/themable-lit-element"
+  },
   "main": "themable-lit-element.js",
   "module": "themable-lit-element.js",
   "dependencies": {
