@@ -1,0 +1,7 @@
+node_modules
+coverage
+/packages/**/*.js
+/packages/**/*.js.map
+/packages/**/*.d.ts
+/packages/**/*.d.ts.map
+!packages/*/custom_typings/**
