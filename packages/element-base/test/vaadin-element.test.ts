@@ -21,7 +21,7 @@ declare global {
 }
 
 describe('VaadinElement', () => {
-  it('should initialize registrations on global Vaadin namespace', function() {
+  it('should initialize registrations on global Vaadin namespace', () => {
     expect(window.Vaadin.registrations).to.deep.equal([]);
   });
 
