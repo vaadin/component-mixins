@@ -11,7 +11,7 @@ declare module '@vaadin/vaadin-themable-mixin/register-styles.js' {
     options?: { moduleId: string }
   ): void;
 
-  class CSSResult {
+  export class CSSResult {
     constructor(cssText: string, safeToken: unknown);
 
     toString(): string;
