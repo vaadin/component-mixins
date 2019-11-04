@@ -1904,12 +1904,13 @@
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
     "@vaadin/vaadin-usage-statistics" "^2.0.4"
 
-"@vaadin/vaadin-themable-mixin@^1.5.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-themable-mixin/-/vaadin-themable-mixin-1.5.1.tgz#4b74625987ac350ba2083d3e0387518febd5f7b9"
-  integrity sha512-wZIafKCeLaQw5v0EmrgXG4okyMeX4EhyGp192AXjLmJttzxViq0JF2YFGxDM80PcoA30q1P2PW0VLtrJNp5btg==
+"@vaadin/vaadin-themable-mixin@^1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-themable-mixin/-/vaadin-themable-mixin-1.5.2.tgz#3fc4ec1180f8032c8025fe70053deacbeffd7f62"
+  integrity sha512-3EsVOhE5lo/nRyX27+nOyPNsV5TtKInTKirldUqucGZZtcyWT4ZxqAxswIz3bAolnb17UDb8eJKHOH6ERMLEhg==
   dependencies:
     "@polymer/polymer" "^3.0.0"
+    lit-element "^2.0.0"
 
 "@vaadin/vaadin-usage-statistics@^2.0.4":
   version "2.0.11"

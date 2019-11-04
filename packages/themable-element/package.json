@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "@polymer/polymer": "^3.3.0",
-    "@vaadin/vaadin-themable-mixin": "^1.5.1",
+    "@vaadin/vaadin-themable-mixin": "^1.5.2",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
   },
