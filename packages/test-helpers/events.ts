@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export function focusin(node: Element) {
   node.dispatchEvent(new CustomEvent('focusin', { bubbles: true, composed: true }));
 }
