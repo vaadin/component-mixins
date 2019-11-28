@@ -1,40 +1,12 @@
 {
-  "extends": [
-    "airbnb-base",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/typescript",
-    "plugin:lit/all",
-    "plugin:wc/recommended",
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
-  ],
-  "plugins": [
-    "@typescript-eslint",
-    "wc",
-    "prettier"
-  ],
-  "parser": "@typescript-eslint/parser",
+  "extends": "vaadin",
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2018,
     "project": "./tsconfig.json"
   },
-  "env": {
-    "browser": true
-  },
   "rules": {
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "import/extensions": "off",
-    "import/prefer-default-export": "off",
-    "class-methods-use-this": [
-      "error",
-      {
-        "exceptMethods": [ "render" ]
-      }
-    ],
-    "no-console": [ "error", { "allow": ["warn"] } ],
-    "no-underscore-dangle": "off"
+    "no-console": [ "error", { "allow": ["warn"] } ]
   },
   "overrides": [
     {
@@ -43,11 +15,10 @@
         "mocha": true
       },
       "globals": {
-        "expect": false,
+        "chai": false,
         "sinon": false
       },
       "rules": {
-        "import/no-extraneous-dependencies": "off",
         "max-classes-per-file": "off",
         "no-unused-expressions": "off"
       }

@@ -1895,14 +1895,14 @@
   resolved "https://registry.yarnpkg.com/@vaadin/vaadin-development-mode-detector/-/vaadin-development-mode-detector-2.0.4.tgz#f49c8009856bead92d248377c36b295b5aae78e5"
   integrity sha512-S+PaFrZpK8uBIOnIHxjntTrgumd5ztuCnZww96ydGKXgo9whXfZsbMwDuD/102a/IuPUMyF+dh/n3PbWzJ6igA==
 
-"@vaadin/vaadin-element-mixin@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-element-mixin/-/vaadin-element-mixin-2.1.4.tgz#d9bc24b8866658c9a4a5f7e94bada7cc8dc6433d"
-  integrity sha512-ZSHrmf5ACKwfsPRymCh3CNJEUaXiYv5xG+Pkiek+J4tUSxChK0TTOuj6RPdPYGn7r3ZZY8BmiFlOzlPqLItY8A==
+"@vaadin/vaadin-element-mixin@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-element-mixin/-/vaadin-element-mixin-2.2.0.tgz#191285d43ea55b453cbc0961bc10579ecf16d049"
+  integrity sha512-8IwH1iSlv3G+1ak08RFg/8smh5zfIANpPZJLLzixW7iBDJaIlWPMzplxnDz5o7GcoYrmpo26e2deKeu4rpEMwg==
   dependencies:
     "@polymer/polymer" "^3.0.0"
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
-    "@vaadin/vaadin-usage-statistics" "^2.0.4"
+    "@vaadin/vaadin-usage-statistics" "^2.1.0"
 
 "@vaadin/vaadin-themable-mixin@^1.5.2":
   version "1.5.2"
@@ -1912,10 +1912,10 @@
     "@polymer/polymer" "^3.0.0"
     lit-element "^2.0.0"
 
-"@vaadin/vaadin-usage-statistics@^2.0.4":
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-usage-statistics/-/vaadin-usage-statistics-2.0.11.tgz#6712d389089f248d2865ed2d74c665103b354378"
-  integrity sha512-6isKfOQnb6BSj181nehId4w8SOUKDLNcNza1RKdiNGgnOlqjZx/p4+FbJS9PQ4q0lwP1/TQa3Vx7SAWdoVfNOQ==
+"@vaadin/vaadin-usage-statistics@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-usage-statistics/-/vaadin-usage-statistics-2.1.0.tgz#9c0fd71dded80f401bcdfbcb3f45b5640fc4256d"
+  integrity sha512-e81nbqY5zsaYhLJuOVkJkB/Um1pGK5POIqIlTNhUfjeoyGaJ63tiX8+D5n6F+GgVxUTLUarsKa6SKRcQel0AzA==
   dependencies:
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
 
@@ -3670,6 +3670,19 @@ eslint-config-prettier@^6.5.0:
   dependencies:
     get-stdin "^6.0.0"
 
+eslint-config-vaadin@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-vaadin/-/eslint-config-vaadin-0.3.1.tgz#86a69c39a8db6507ce8d76ec588390c5adfff711"
+  integrity sha512-JRKNDvGBWRtZjfciKXpl23abHIyUAxEaFAZwautGj7hUquHCVcg0+GNtwUGkwF0HQ5QtaJcfbkoBWM3b7nUSow==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "^2.6.0"
+    "@typescript-eslint/parser" "^2.6.0"
+    eslint-config-airbnb-base "^14.0.0"
+    eslint-config-prettier "^6.5.0"
+    eslint-plugin-import "^2.18.2"
+    eslint-plugin-lit "^1.2.0"
+    eslint-plugin-prettier "^3.1.1"
+
 eslint-import-resolver-node@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.2.tgz#58f15fb839b8d0576ca980413476aab2472db66a"
@@ -3718,14 +3731,6 @@ eslint-plugin-prettier@^3.1.1:
   integrity sha512-A+TZuHZ0KU0cnn56/9mfR7/KjUJ9QNVXUhwvRFSR7PGPe0zQR6PTkmyqg1AtUUEOzTqeRsUwyKFh0oVZKVCrtA==
   dependencies:
     prettier-linter-helpers "^1.0.0"
-
-eslint-plugin-wc@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-wc/-/eslint-plugin-wc-1.2.0.tgz#c47cedfce92823ea9bd5ebbe25121377cdcb55e4"
-  integrity sha512-p1Vv8GkiTS8ZNfsmWvNJfKsGwsfCDteo2QsFE53x5DuHN7YDVf36II46DauP3mBCQ9pZnYD8lZyl/uz3qBtwQw==
-  dependencies:
-    js-levenshtein-esm "^1.2.0"
-    validate-element-name "^2.1.1"
 
 eslint-scope@^5.0.0:
   version "5.0.0"
@@ -5075,11 +5080,6 @@ is-plain-object@^3.0.0:
   dependencies:
     isobject "^4.0.0"
 
-is-potential-custom-element-name@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/is-potential-custom-element-name/-/is-potential-custom-element-name-1.0.0.tgz#0c52e54bcca391bb2c494b21e8626d7336c6e397"
-  integrity sha1-DFLlS8yjkbssSUsh6GJtczbG45c=
-
 is-promise@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
@@ -5279,11 +5279,6 @@ istanbul-reports@^2.2.4:
   integrity sha512-SKi4rnMyLBKe0Jy2uUdx28h8oG7ph2PPuQPvIAh31d+Ci+lSiEu4C+h3oBPuJ9+mPKhOyW0M8gY4U5NM1WLeXA==
   dependencies:
     handlebars "^4.1.2"
-
-js-levenshtein-esm@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/js-levenshtein-esm/-/js-levenshtein-esm-1.2.0.tgz#96532c34e0c90df198c9419963c64ca3cf43ae92"
-  integrity sha512-fzreKVq1eD7eGcQr7MtRpQH94f8gIfhdrc7yeih38xh684TNMK9v5aAu2wxfIRMk/GpAJRrzcirMAPIaSDaByQ==
 
 js-levenshtein@^1.1.3:
   version "1.1.6"
@@ -5854,7 +5849,7 @@ log-symbols@2.2.0, log-symbols@^2.1.0:
   dependencies:
     chalk "^2.0.1"
 
-log-symbols@^1.0.0, log-symbols@^1.0.2:
+log-symbols@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/log-symbols/-/log-symbols-1.0.2.tgz#376ff7b58ea3086a0f09facc74617eca501e1a18"
   integrity sha1-N2/3tY6jCGoPCfrMdGF+ylAeGhg=
@@ -6007,7 +6002,7 @@ meow@5.0.0:
     trim-newlines "^2.0.0"
     yargs-parser "^10.0.0"
 
-meow@^3.3.0, meow@^3.7.0:
+meow@^3.3.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/meow/-/meow-3.7.0.tgz#72cb668b425228290abbfa856892587308a801fb"
   integrity sha1-cstmi0JSKCkKu/qFaJJYcwioAfs=
@@ -8678,15 +8673,6 @@ valid-url@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/valid-url/-/valid-url-1.0.9.tgz#1c14479b40f1397a75782f115e4086447433a200"
   integrity sha1-HBRHm0DxOXp1eC8RXkCGRHQzogA=
-
-validate-element-name@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/validate-element-name/-/validate-element-name-2.1.1.tgz#8ff75f7da69f73e7c510588362130508b7ac644e"
-  integrity sha1-j/dffaafc+fFEFiDYhMFCLesZE4=
-  dependencies:
-    is-potential-custom-element-name "^1.0.0"
-    log-symbols "^1.0.0"
-    meow "^3.7.0"
 
 validate-npm-package-license@^3.0.1, validate-npm-package-license@^3.0.3:
   version "3.0.4"
