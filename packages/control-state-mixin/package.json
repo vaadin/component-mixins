@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@open-wc/testing-helpers": "^1.2.1",
-    "@vaadin/test-helpers": "^0.1.0"
+    "@vaadin/test-helpers": "^0.0.0"
   },
   "publishConfig": {
     "access": "public"

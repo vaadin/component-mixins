@@ -1,12 +1,5 @@
 import { LitElement, html, customElement } from 'lit-element';
-import {
-  focusin,
-  focusout,
-  makeShiftTabEvent,
-  shiftTabDown,
-  tabDown,
-  tabUp
-} from '@vaadin/test-helpers';
+import { focusin, focusout, makeKeydownEvent, tabKeyDown, tabKeyUp } from '@vaadin/test-helpers';
 import { fixture, nextFrame } from '@open-wc/testing-helpers';
 import { ControlStateMixin } from '../control-state-mixin';
 
@@ -84,16 +77,16 @@ describe('control-state-mixin', () => {
 
   describe('focus-ring', () => {
     it('should set the focus-ring attribute when TAB is pressed and focus is received', () => {
-      tabDown(document.body);
+      tabKeyDown(document.body);
       focusin(focusable);
-      tabUp(document.body);
+      tabKeyUp(document.body);
       expect(element.hasAttribute('focus-ring')).to.be.true;
       focusout(focusable);
       expect(element.hasAttribute('focus-ring')).to.be.false;
     });
 
     it('should set the focus-ring attribute when SHIFT+TAB is pressed and focus is received', () => {
-      shiftTabDown(document.body);
+      tabKeyDown(document.body, 'shift');
       focusin(focusable);
       expect(element.hasAttribute('focus-ring')).to.be.true;
       focusout(focusable);
@@ -102,7 +95,7 @@ describe('control-state-mixin', () => {
 
     it('should refocus the field', done => {
       element.dispatchEvent(new CustomEvent('focusin'));
-      shiftTabDown(document.body);
+      tabKeyDown(document.body, 'shift');
 
       // Shift + Tab disables refocusing temporarily, normal behavior is restored asynchronously.
       setTimeout(() => {
@@ -187,14 +180,14 @@ describe('control-state-mixin', () => {
 
     it('should remove focused attribute when pressing Shift + Tab', () => {
       focusin(focusable);
-      const event = makeShiftTabEvent();
+      const event = makeKeydownEvent(9, 'shift');
       element.dispatchEvent(event);
       expect(element.hasAttribute('focused')).to.be.false;
     });
 
     it('should not remove focused attribute on Shift + Tab if event is prevented', () => {
       focusin(focusable);
-      const event = makeShiftTabEvent();
+      const event = makeKeydownEvent(9, 'shift');
       // In Edge just calling preventDefault() does not work because of the polyfilled dispatchEvent
       Object.defineProperty(event, 'defaultPrevented', {
         get() {
