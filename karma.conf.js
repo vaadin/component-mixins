@@ -36,7 +36,7 @@ function determineBrowsers() {
 module.exports = config => {
   config.set({
     basePath: '',
-    frameworks: ['esm', 'mocha', 'chai', 'sinon', 'source-map-support'],
+    frameworks: ['esm', 'mocha', 'sinon-chai', 'source-map-support'],
 
     browsers: determineBrowsers(),
     browserDisconnectTimeout: 300000,
