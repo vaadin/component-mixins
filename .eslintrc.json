@@ -6,6 +6,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "max-classes-per-file": "off",
     "no-console": [ "error", { "allow": ["warn"] } ]
   },
   "overrides": [
@@ -19,7 +20,6 @@
         "sinon": false
       },
       "rules": {
-        "max-classes-per-file": "off",
         "no-unused-expressions": "off"
       }
     }
