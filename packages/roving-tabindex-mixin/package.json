@@ -1,6 +1,6 @@
 {
   "name": "@vaadin/roving-tabindex-mixin",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "repository": {
@@ -15,8 +15,8 @@
     "roving-tabindex-*.js*"
   ],
   "dependencies": {
-    "@vaadin/keyboard-direction-mixin": "^0.0.0",
-    "@vaadin/slotted-items-mixin": "^0.0.0",
+    "@vaadin/keyboard-direction-mixin": "^0.1.0",
+    "@vaadin/slotted-items-mixin": "^0.1.0",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
   },
