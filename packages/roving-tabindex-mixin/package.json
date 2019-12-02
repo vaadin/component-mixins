@@ -1,0 +1,30 @@
+{
+  "name": "@vaadin/roving-tabindex-mixin",
+  "version": "0.0.0",
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaadin/component-mixins.git",
+    "directory": "packages/roving-tabindex-mixin"
+  },
+  "main": "roving-tabindex-mixin.js",
+  "module": "roving-tabindex-mixin.js",
+  "files": [
+    "roving-tabindex-*.d.ts*",
+    "roving-tabindex-*.js*"
+  ],
+  "dependencies": {
+    "@vaadin/keyboard-direction-mixin": "^0.0.0",
+    "@vaadin/slotted-items-mixin": "^0.0.0",
+    "lit-element": "^2.0.0",
+    "lit-html": "^1.0.0"
+  },
+  "devDependencies": {
+    "@open-wc/testing-helpers": "^1.2.1",
+    "@vaadin/test-helpers": "^0.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
