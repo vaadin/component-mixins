@@ -1,13 +1,14 @@
 import { LitElement, html, customElement } from 'lit-element';
 import { focusin, focusout, makeKeydownEvent, tabKeyDown, tabKeyUp } from '@vaadin/test-helpers';
 import { fixture, nextFrame } from '@open-wc/testing-helpers';
+import { DisabledStateMixin } from '@vaadin/disabled-state-mixin';
 import { ControlStateMixin } from '../control-state-mixin';
 
 const { expect } = chai;
 const { sinon } = window;
 
 @customElement('csm-test-element')
-class CsmTestElement extends ControlStateMixin(LitElement) {
+class CsmTestElement extends ControlStateMixin(DisabledStateMixin(LitElement)) {
   render() {
     return html`
       <input id="input" /><input id="secondInput" />
@@ -19,7 +20,7 @@ class CsmTestElement extends ControlStateMixin(LitElement) {
   }
 }
 
-describe('control-state-mixin', () => {
+describe('ControlStateMixin', () => {
   let element: CsmTestElement;
   let focusable: HTMLInputElement;
 
@@ -121,24 +122,14 @@ describe('control-state-mixin', () => {
       expect(focusable.getAttribute('tabindex')).to.equal('-1');
     });
 
-    it('should update internal element tabIndex', async () => {
+    it('should update focus element tabIndex while element is disabled', async () => {
       element.tabIndex = 4;
       await element.updateComplete;
       expect(element.getAttribute('tabindex')).to.equal(null);
       expect(focusable.getAttribute('tabindex')).to.be.equal('4');
     });
 
-    it('should have aria-disabled attribute set to true when disabled', async () => {
-      expect(element.getAttribute('aria-disabled')).to.be.equal('true');
-    });
-
-    it('should not have aria-disabled attribute when is not disabled', async () => {
-      element.disabled = false;
-      await element.updateComplete;
-      expect(element.getAttribute('aria-disabled')).to.not.be.ok;
-    });
-
-    it('should apply tabindex value, changed while element was disabled, once it is enabled', async () => {
+    it('should restore tabIndex value changed while disabled once element is enabled', async () => {
       element.tabIndex = 3;
       await element.updateComplete;
       expect(element.getAttribute('tabindex')).to.equal(null);
@@ -218,24 +209,6 @@ describe('control-state-mixin', () => {
       expect(spy.callCount).to.equal(0);
     });
   });
-
-  describe('click()', () => {
-    it('should fire click event for element', () => {
-      const spy = sinon.spy();
-      element.addEventListener('click', spy);
-      element.click();
-      expect(spy.called).to.be.true;
-    });
-
-    it('should not fire click event for disabled element', async () => {
-      element.disabled = true;
-      await element.updateComplete;
-      const spy = sinon.spy();
-      element.addEventListener('click', spy);
-      element.click();
-      expect(spy.called).to.be.false;
-    });
-  });
 });
 
 describe('autofocus', () => {
@@ -254,7 +227,7 @@ describe('autofocus', () => {
 
 describe('focused with nested focusable elements', () => {
   @customElement('csm-wrapper-element')
-  class CsmWrapperElement extends ControlStateMixin(LitElement) {
+  class CsmWrapperElement extends ControlStateMixin(DisabledStateMixin(LitElement)) {
     render() {
       return html`
         <csm-test-element id="testElement"></csm-test-element>
