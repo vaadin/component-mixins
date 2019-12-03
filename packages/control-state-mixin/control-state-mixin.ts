@@ -1,20 +1,19 @@
 import { LitElement, property, PropertyValues } from 'lit-element';
+import { DisabledStateInterface } from '@vaadin/disabled-state-mixin';
 
 export interface ControlStateInterface {
   autofocus: boolean;
-  disabled: boolean;
   tabIndex: number | null;
   focus(): void;
   blur(): void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LitBase = new (...args: any[]) => LitElement;
+type Constructor<T = object> = new (...args: any[]) => T;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LitControlState = new (...args: any[]) => LitElement & ControlStateInterface;
-
-export const ControlStateMixin = <T extends LitBase>(base: T): LitControlState & T => {
+export const ControlStateMixin = <T extends Constructor<DisabledStateInterface & LitElement>>(
+  base: T
+): Constructor<ControlStateInterface> & T => {
   class VaadinControlStateMixin extends base implements ControlStateInterface {
     @property({
       reflect: true,
@@ -38,16 +37,9 @@ export const ControlStateMixin = <T extends LitBase>(base: T): LitControlState &
      */
     @property({ type: Boolean, reflect: true }) autofocus = false;
 
-    /**
-     * If true, the user cannot interact with this element.
-     */
-    @property({ type: Boolean, reflect: true }) disabled = false;
-
     private _tabindex?: number;
 
     private _previousTabIndex?: number;
-
-    private _tabIndexValue?: number;
 
     private _isShiftTabbing = false;
 
@@ -122,14 +114,32 @@ export const ControlStateMixin = <T extends LitBase>(base: T): LitControlState &
 
     protected update(props: PropertyValues) {
       if (props.has('disabled')) {
-        this._disabledChanged(this.disabled, props.get('disabled'));
+        if (this.disabled) {
+          this._previousTabIndex = this.tabIndex;
+          this.tabIndex = -1;
+        } else if (props.get('disabled')) {
+          if (this._previousTabIndex !== undefined) {
+            this.tabIndex = this._previousTabIndex;
+          }
+        }
       }
 
       if (props.has('tabIndex')) {
-        // save value of tabindex, as it can be overridden to
-        // undefined in case if the element is disabled
-        this._tabIndexValue = this.tabIndex;
-        this._tabIndexChanged(this.tabIndex);
+        const { tabIndex } = this;
+        // When element is disabled, propagate `tabIndex` to focusElement
+        // and then reset it on the host element to disallow interaction.
+        if (this.disabled && tabIndex != null) {
+          if (tabIndex !== -1) {
+            this._previousTabIndex = tabIndex;
+          }
+          // We need this because of resetting tabIndex to null below,
+          // so in `updated()` we have a reference to the old value.
+          props.set('tabIndex', tabIndex);
+
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          this.tabIndex = null;
+        }
       }
 
       super.update(props);
@@ -145,8 +155,10 @@ export const ControlStateMixin = <T extends LitBase>(base: T): LitControlState &
         }
       }
 
-      if (props.has('tabIndex') && this._tabIndexValue !== undefined) {
-        this.focusElement.tabIndex = this._tabIndexValue;
+      if (props.has('tabIndex')) {
+        const { tabIndex } = this;
+        const oldTabIndex = props.get('tabIndex') as number;
+        this.focusElement.tabIndex = tabIndex == null ? oldTabIndex : tabIndex;
       }
     }
 
@@ -211,40 +223,6 @@ export const ControlStateMixin = <T extends LitBase>(base: T): LitControlState &
     blur() {
       this.focusElement.blur();
       this._setFocused(false);
-    }
-
-    click() {
-      if (!this.disabled) {
-        super.click();
-      }
-    }
-
-    protected _disabledChanged(disabled?: boolean, oldDisabled?: unknown) {
-      if (disabled) {
-        this._previousTabIndex = this.tabIndex;
-        this.tabIndex = -1;
-        this.setAttribute('aria-disabled', 'true');
-      } else if (oldDisabled) {
-        if (this._previousTabIndex !== undefined) {
-          this.tabIndex = this._previousTabIndex;
-        }
-        this.removeAttribute('aria-disabled');
-      }
-    }
-
-    protected _tabIndexChanged(tabindex: number) {
-      if (this.disabled && tabindex != null) {
-        if (this.tabIndex !== -1) {
-          this._previousTabIndex = this.tabIndex;
-        }
-        this._resetTabindex();
-      }
-    }
-
-    private _resetTabindex() {
-      // FIXME: hack to bypass TypeScript complaining about null
-      Object.assign(this, { tabIndex: null });
-      this.requestUpdate('tabIndex', this._previousTabIndex);
     }
   }
 
