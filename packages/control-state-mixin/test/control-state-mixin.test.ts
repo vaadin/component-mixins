@@ -1,14 +1,15 @@
 import { LitElement, html, customElement } from 'lit-element';
-import { focusin, focusout, makeKeydownEvent, tabKeyDown, tabKeyUp } from '@vaadin/test-helpers';
-import { fixture, nextFrame } from '@open-wc/testing-helpers';
+import { focusin, focusout, makeKeydownEvent, tabKeyDown } from '@vaadin/test-helpers';
+import { fixture, nextFrame, aTimeout } from '@open-wc/testing-helpers';
 import { DisabledStateMixin } from '@vaadin/disabled-state-mixin';
+import { FocusVisibleMixin } from '@vaadin/focus-visible-mixin';
 import { ControlStateMixin } from '../control-state-mixin';
 
 const { expect } = chai;
 const { sinon } = window;
 
-@customElement('csm-test-element')
-class CsmTestElement extends ControlStateMixin(DisabledStateMixin(LitElement)) {
+@customElement('csm-element')
+class CsmElement extends ControlStateMixin(DisabledStateMixin(FocusVisibleMixin(LitElement))) {
   render() {
     return html`
       <input id="input" /><input id="secondInput" />
@@ -21,11 +22,13 @@ class CsmTestElement extends ControlStateMixin(DisabledStateMixin(LitElement)) {
 }
 
 describe('ControlStateMixin', () => {
-  let element: CsmTestElement;
+  let element: CsmElement;
   let focusable: HTMLInputElement;
 
   beforeEach(async () => {
-    element = (await fixture(`<csm-test-element></csm-test-element>`)) as CsmTestElement;
+    element = await fixture(html`
+      <csm-element></csm-element>
+    `);
     focusable = element.focusElement;
   });
 
@@ -76,38 +79,6 @@ describe('ControlStateMixin', () => {
     });
   });
 
-  describe('focus-ring', () => {
-    it('should set the focus-ring attribute when TAB is pressed and focus is received', () => {
-      tabKeyDown(document.body);
-      focusin(focusable);
-      tabKeyUp(document.body);
-      expect(element.hasAttribute('focus-ring')).to.be.true;
-      focusout(focusable);
-      expect(element.hasAttribute('focus-ring')).to.be.false;
-    });
-
-    it('should set the focus-ring attribute when SHIFT+TAB is pressed and focus is received', () => {
-      tabKeyDown(document.body, 'shift');
-      focusin(focusable);
-      expect(element.hasAttribute('focus-ring')).to.be.true;
-      focusout(focusable);
-      expect(element.hasAttribute('focus-ring')).to.be.false;
-    });
-
-    it('should refocus the field', done => {
-      element.dispatchEvent(new CustomEvent('focusin'));
-      tabKeyDown(document.body, 'shift');
-
-      // Shift + Tab disables refocusing temporarily, normal behavior is restored asynchronously.
-      setTimeout(() => {
-        const spy = sinon.spy(focusable, 'focus');
-        element.dispatchEvent(new CustomEvent('focusin'));
-        expect(spy.called).to.be.true;
-        done();
-      }, 0);
-    });
-  });
-
   describe('disabled', () => {
     beforeEach(async () => {
       element.disabled = true;
@@ -141,16 +112,6 @@ describe('ControlStateMixin', () => {
   });
 
   describe('focused', () => {
-    it('should not set focused attribute on host click', () => {
-      element.click();
-      expect(element.hasAttribute('focused')).to.be.false;
-    });
-
-    it('should set focused attribute on focusin event dispatched', () => {
-      focusin(focusable);
-      expect(element.hasAttribute('focused')).to.be.true;
-    });
-
     it('should not set focused attribute on focusin event dispatched when disabled', () => {
       element.disabled = true;
       focusin(focusable);
@@ -160,12 +121,6 @@ describe('ControlStateMixin', () => {
     it('should not set focused attribute on focusin event dispatched from other focusable element inside component', () => {
       const secondFocusable = element.renderRoot.querySelector('#secondInput') as HTMLInputElement;
       focusin(secondFocusable);
-      expect(element.hasAttribute('focused')).to.be.false;
-    });
-
-    it('should remove focused attribute when disconnected from the DOM', () => {
-      focusin(focusable);
-      element.parentNode!.removeChild(element); // eslint-disable-line @typescript-eslint/no-non-null-assertion
       expect(element.hasAttribute('focused')).to.be.false;
     });
 
@@ -192,7 +147,7 @@ describe('ControlStateMixin', () => {
 
   describe('focus()', () => {
     it('should not throw an error when using focus() to a newly created element', () => {
-      expect(() => document.createElement('csm-test-element').focus()).to.not.throw(Error);
+      expect(() => document.createElement('csm-element').focus()).to.not.throw(Error);
     });
 
     it('should invoke focus on the focus element', () => {
@@ -208,43 +163,60 @@ describe('ControlStateMixin', () => {
       element.focus();
       expect(spy.callCount).to.equal(0);
     });
+
+    it('should refocus the field', async () => {
+      element.dispatchEvent(new CustomEvent('focusin'));
+      tabKeyDown(document.body, 'shift');
+
+      // Shift + Tab disables refocusing temporarily, normal behavior is restored asynchronously.
+      await aTimeout(0);
+      const spy = sinon.spy(focusable, 'focus');
+      element.dispatchEvent(new CustomEvent('focusin'));
+      expect(spy.called).to.be.true;
+    });
   });
 });
 
 describe('autofocus', () => {
-  let element: CsmTestElement;
+  let element: CsmElement;
+  let focusable: HTMLInputElement;
 
   beforeEach(async () => {
-    element = (await fixture(`<csm-test-element autofocus></csm-test-element>`)) as CsmTestElement;
+    element = await fixture(html`
+      <csm-element autofocus></csm-element>
+    `);
+    focusable = element.focusElement;
   });
 
-  it('should have focused and focus-ring set', async () => {
+  it('should focus the internal focus element on autofocus', async () => {
+    const spy = sinon.spy(focusable, 'focus');
     await nextFrame();
-    expect(element.hasAttribute('focused')).to.be.true;
-    expect(element.hasAttribute('focus-ring')).to.be.true;
+    expect(spy).to.be.calledOnce;
   });
 });
 
 describe('focused with nested focusable elements', () => {
-  @customElement('csm-wrapper-element')
-  class CsmWrapperElement extends ControlStateMixin(DisabledStateMixin(LitElement)) {
+  @customElement('csm-wrapper')
+  class CsmWrapper extends ControlStateMixin(DisabledStateMixin(FocusVisibleMixin(LitElement))) {
     render() {
       return html`
-        <csm-test-element id="testElement"></csm-test-element>
+        <csm-element id="testElement"></csm-element>
       `;
     }
 
     get focusElement() {
-      return this.renderRoot.querySelector('#testElement') as CsmTestElement;
+      return this.renderRoot.querySelector('#testElement') as CsmElement;
     }
   }
 
-  let wrapper: CsmWrapperElement;
-  let element: CsmTestElement;
+  let wrapper: CsmWrapper;
+  let element: CsmElement;
   let focusable: HTMLInputElement;
 
   beforeEach(async () => {
-    wrapper = (await fixture(`<csm-wrapper-element></csm-wrapper-element>`)) as CsmWrapperElement;
+    wrapper = await fixture(html`
+      <csm-wrapper></csm-wrapper>
+    `);
     element = wrapper.focusElement;
     await element.updateComplete;
     focusable = element.focusElement;

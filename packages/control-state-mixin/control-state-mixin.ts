@@ -1,8 +1,9 @@
-import { LitElement, property, PropertyValues } from 'lit-element';
+import { property, PropertyValues } from 'lit-element';
 import { DisabledStateInterface } from '@vaadin/disabled-state-mixin';
+import { FocusVisibleInterface } from '@vaadin/focus-visible-mixin';
+import { FocusVisibleClass } from '@vaadin/focus-visible-mixin/focus-visible-class';
 
 export interface ControlStateInterface {
-  autofocus: boolean;
   tabIndex: number | null;
   focus(): void;
   blur(): void;
@@ -11,7 +12,9 @@ export interface ControlStateInterface {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T = object> = new (...args: any[]) => T;
 
-export const ControlStateMixin = <T extends Constructor<DisabledStateInterface & LitElement>>(
+export const ControlStateMixin = <
+  T extends Constructor<DisabledStateInterface & FocusVisibleInterface & FocusVisibleClass>
+>(
   base: T
 ): Constructor<ControlStateInterface> & T => {
   class VaadinControlStateMixin extends base implements ControlStateInterface {
@@ -32,22 +35,11 @@ export const ControlStateMixin = <T extends Constructor<DisabledStateInterface &
       this.requestUpdate('tabIndex', oldValue);
     }
 
-    /**
-     * Specify that this control should have input focus when the page loads.
-     */
-    @property({ type: Boolean, reflect: true }) autofocus = false;
-
     private _tabindex?: number;
 
     private _previousTabIndex?: number;
 
     private _isShiftTabbing = false;
-
-    private _tabPressed = false;
-
-    private _boundKeydownListener = this._bodyKeydownListener.bind(this);
-
-    private _boundKeyupListener = this._bodyKeyupListener.bind(this);
 
     /* eslint-disable @typescript-eslint/no-explicit-any */
     constructor(...args: any[]) {
@@ -59,37 +51,8 @@ export const ControlStateMixin = <T extends Constructor<DisabledStateInterface &
     }
     /* eslint-enable @typescript-eslint/no-explicit-any */
 
-    connectedCallback() {
-      super.connectedCallback();
-
-      document.body.addEventListener('keydown', this._boundKeydownListener, true);
-      document.body.addEventListener('keyup', this._boundKeyupListener, true);
-    }
-
-    disconnectedCallback() {
-      super.disconnectedCallback();
-
-      document.body.removeEventListener('keydown', this._boundKeydownListener, true);
-      document.body.removeEventListener('keyup', this._boundKeyupListener, true);
-
-      // in non-Chrome browsers, blur does not fire on the element when it is disconnected.
-      // reproducible in `<vaadin-date-picker>` when closing on `Cancel` or `Today` click.
-      if (this.hasAttribute('focused')) {
-        this._setFocused(false);
-      }
-    }
-
-    protected firstUpdated() {
-      this.addEventListener('focusin', e => {
-        if (e.composedPath()[0] === this) {
-          this._focus();
-        } else if (e.composedPath().indexOf(this.focusElement) !== -1 && !this.disabled) {
-          this._setFocused(true);
-        }
-      });
-
-      this.addEventListener('focusout', () => this._setFocused(false));
-
+    protected firstUpdated(props: PropertyValues) {
+      super.firstUpdated(props);
       this.addEventListener('keydown', e => {
         if (!e.defaultPrevented && e.shiftKey && e.keyCode === 9) {
           // Flag is checked in _focus event handler.
@@ -102,14 +65,6 @@ export const ControlStateMixin = <T extends Constructor<DisabledStateInterface &
           }, 0);
         }
       });
-
-      if (this.autofocus && !this.disabled) {
-        window.requestAnimationFrame(() => {
-          this._focus();
-          this._setFocused(true);
-          this.setAttribute('focus-ring', '');
-        });
-      }
     }
 
     protected update(props: PropertyValues) {
@@ -162,28 +117,22 @@ export const ControlStateMixin = <T extends Constructor<DisabledStateInterface &
       }
     }
 
+    protected _autoFocus() {
+      super._autoFocus && super._autoFocus(); // eslint-disable-line no-unused-expressions
+      this.focusElement.focus();
+    }
+
+    protected _onFocusin(event: FocusEvent) {
+      const path = event.composedPath();
+      if (path[0] === this) {
+        this._focus();
+      } else if (path.indexOf(this.focusElement) !== -1 && !this.disabled && super._onFocusin) {
+        super._onFocusin(event);
+      }
+    }
+
     protected _setFocused(focused: boolean) {
-      if (focused) {
-        this.setAttribute('focused', '');
-      } else {
-        this.removeAttribute('focused');
-      }
-
-      // focus-ring is true when the element was focused from the keyboard.
-      // Focus Ring [A11ycasts]: https://youtu.be/ilj2P5-5CjI
-      if (focused && this._tabPressed) {
-        this.setAttribute('focus-ring', '');
-      } else {
-        this.removeAttribute('focus-ring');
-      }
-    }
-
-    private _bodyKeydownListener(e: KeyboardEvent) {
-      this._tabPressed = e.keyCode === 9;
-    }
-
-    private _bodyKeyupListener() {
-      this._tabPressed = false;
+      super._setFocused && super._setFocused(focused); // eslint-disable-line no-unused-expressions
     }
 
     /**

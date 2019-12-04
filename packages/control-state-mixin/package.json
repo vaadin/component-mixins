@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "@vaadin/disabled-state-mixin": "^0.0.0",
+    "@vaadin/focus-visible-mixin": "^0.0.0",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
   },
