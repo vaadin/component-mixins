@@ -1,0 +1,27 @@
+{
+  "name": "@vaadin/orientation-mixin",
+  "version": "0.0.0",
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaadin/component-mixins.git",
+    "directory": "packages/orientation-mixin"
+  },
+  "main": "orientation-mixin.js",
+  "module": "orientation-mixin.js",
+  "files": [
+    "orientation-*.d.ts*",
+    "orientation-*.js*"
+  ],
+  "dependencies": {
+    "lit-element": "^2.0.0",
+    "lit-html": "^1.0.0"
+  },
+  "devDependencies": {
+    "@open-wc/testing-helpers": "^1.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
