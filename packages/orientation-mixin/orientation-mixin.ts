@@ -4,7 +4,7 @@ import { LitElement, property, PropertyValues } from 'lit-element';
 type Constructor<T = object> = new (...args: any[]) => T;
 
 export interface OrientationInterface {
-  orientation: string;
+  orientation: string | null | undefined;
 }
 
 export const OrientationMixin = <T extends Constructor<LitElement>>(
@@ -15,17 +15,27 @@ export const OrientationMixin = <T extends Constructor<LitElement>>(
      * Set element disposition. Possible values are `horizontal|vertical`.
      * @type {`horizontal|vertical}
      */
-    @property({ type: String, reflect: true }) orientation = 'horizontal';
+    @property({ type: String, reflect: true }) orientation: string | null | undefined;
+
+    protected firstUpdated(props: PropertyValues) {
+      super.firstUpdated(props);
+
+      this._setOrientation();
+    }
 
     protected updated(props: PropertyValues) {
       super.updated(props);
 
       if (props.has('orientation')) {
-        this.setAttribute(
-          'aria-orientation',
-          this.orientation === 'vertical' ? 'vertical' : 'horizontal'
-        );
+        this._setOrientation();
       }
+    }
+
+    private _setOrientation() {
+      this.setAttribute(
+        'aria-orientation',
+        this.orientation === 'vertical' ? 'vertical' : 'horizontal'
+      );
     }
   }
 

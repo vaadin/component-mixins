@@ -20,8 +20,12 @@ describe('OrientationMixin', () => {
     element = await fixture(`<om-element></om-element>`);
   });
 
-  it('should have orientation property set to "horizontal" by default', () => {
-    expect(element.orientation).to.equal('horizontal');
+  it('should not have orientation property set by default', () => {
+    expect(element.orientation).to.not.be.ok;
+  });
+
+  it('should not have orientation attribute set by default', () => {
+    expect(element.hasAttribute('orientation')).to.be.false;
   });
 
   it('should set aria-orientation attribute to "horizontal" by default', () => {
@@ -29,9 +33,9 @@ describe('OrientationMixin', () => {
   });
 
   it('should reflect orientation property value to the corresponding attribute', async () => {
-    element.orientation = 'vertical';
+    element.orientation = 'horizontal';
     await element.updateComplete;
-    expect(element.getAttribute('orientation')).to.equal('vertical');
+    expect(element.getAttribute('orientation')).to.equal('horizontal');
   });
 
   it('should toggle aria-orientation attribute when orientation property changes', async () => {
