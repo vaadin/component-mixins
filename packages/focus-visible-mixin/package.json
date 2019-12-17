@@ -1,0 +1,28 @@
+{
+  "name": "@vaadin/focus-visible-mixin",
+  "version": "0.0.0",
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaadin/component-mixins.git",
+    "directory": "packages/focus-visible-mixin"
+  },
+  "main": "focus-visible-mixin.js",
+  "module": "focus-visible-mixin.js",
+  "files": [
+    "focus-visible-*.d.ts*",
+    "focus-visible-*.js*"
+  ],
+  "dependencies": {
+    "lit-element": "^2.0.0",
+    "lit-html": "^1.0.0"
+  },
+  "devDependencies": {
+    "@open-wc/testing-helpers": "^1.2.1",
+    "@vaadin/test-helpers": "^0.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
