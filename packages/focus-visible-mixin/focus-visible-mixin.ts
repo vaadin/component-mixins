@@ -76,19 +76,11 @@ export const FocusVisibleMixin = <T extends Constructor<FocusVisibleClass>>(
     }
 
     protected _setFocused(focused: boolean) {
-      if (focused) {
-        this.setAttribute('focused', '');
-      } else {
-        this.removeAttribute('focused');
-      }
+      this.toggleAttribute('focused', focused);
 
       // focus-visible (focus-ring) attribute should be set
       // when the element was focused from the keyboard.
-      if (focused && keyboardActive) {
-        this.setAttribute('focus-ring', '');
-      } else {
-        this.removeAttribute('focus-ring');
-      }
+      this.toggleAttribute('focus-ring', focused && keyboardActive);
     }
   }
 
