@@ -81,11 +81,7 @@ export const ActiveStateMixin = <T extends Constructor<DisabledStateInterface & 
     }
 
     protected _setActive(active: boolean) {
-      if (active) {
-        this.setAttribute('active', '');
-      } else {
-        this.removeAttribute('active');
-      }
+      this.toggleAttribute('active', active);
     }
   }
   return ActiveState;
