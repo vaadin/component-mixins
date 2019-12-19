@@ -6,7 +6,8 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "max-classes-per-file": "off"
+    "max-classes-per-file": "off",
+    "@typescript-eslint/ban-ts-ignore": "off"
   },
   "overrides": [
     {
