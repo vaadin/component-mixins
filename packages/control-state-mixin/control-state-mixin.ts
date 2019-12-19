@@ -91,7 +91,6 @@ export const ControlStateMixin = <
           // so in `updated()` we have a reference to the old value.
           props.set('tabIndex', tabIndex);
 
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
           this.tabIndex = null;
         }
