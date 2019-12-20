@@ -1,6 +1,6 @@
 {
   "name": "@vaadin/control-state-mixin",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "repository": {
@@ -15,14 +15,14 @@
     "control-state-mixin.js*"
   ],
   "dependencies": {
-    "@vaadin/disabled-state-mixin": "^0.0.0",
-    "@vaadin/focus-visible-mixin": "^0.0.0",
+    "@vaadin/disabled-state-mixin": "^0.1.0",
+    "@vaadin/focus-visible-mixin": "^0.1.0",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
   },
   "devDependencies": {
     "@open-wc/testing-helpers": "^1.2.1",
-    "@vaadin/test-helpers": "^0.1.0"
+    "@vaadin/test-helpers": "^0.1.1"
   },
   "publishConfig": {
     "access": "public"
