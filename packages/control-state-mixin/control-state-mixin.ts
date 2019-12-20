@@ -117,7 +117,9 @@ export const ControlStateMixin = <
     }
 
     protected _autoFocus() {
-      super._autoFocus && super._autoFocus(); // eslint-disable-line no-unused-expressions
+      if (super._autoFocus) {
+        super._autoFocus();
+      }
       this.focusElement.focus();
     }
 
@@ -131,7 +133,9 @@ export const ControlStateMixin = <
     }
 
     protected _setFocused(focused: boolean) {
-      super._setFocused && super._setFocused(focused); // eslint-disable-line no-unused-expressions
+      if (super._setFocused) {
+        super._setFocused(focused);
+      }
     }
 
     /**
