@@ -1,8 +1,85 @@
-import {
-  keyDownOn,
-  keyUpOn,
-  keyboardEventFor
-} from '@polymer/iron-test-helpers/mock-interactions.js';
+/**
+ * Returns a keyboard event. This event bubbles and is cancellable.
+ */
+export function keyboardEventFor(
+  type: string,
+  keyCode: number,
+  modifiers: string | string[] = [],
+  key?: string
+) {
+  const event = new CustomEvent(type, {
+    detail: 0,
+    bubbles: true,
+    cancelable: true,
+    // Allow event to go outside a ShadowRoot.
+    composed: true
+  });
+
+  // @ts-ignore
+  event.keyCode = keyCode;
+
+  // @ts-ignore
+  event.code = keyCode;
+
+  const modifierKeys = typeof modifiers === 'string' ? [modifiers] : modifiers;
+
+  // @ts-ignore
+  event.shiftKey = modifierKeys.indexOf('shift') !== -1;
+
+  // @ts-ignore
+  event.altKey = modifierKeys.indexOf('alt') !== -1;
+
+  // @ts-ignore
+  event.ctrlKey = modifierKeys.indexOf('ctrl') !== -1;
+
+  // @ts-ignore
+  event.metaKey = modifierKeys.indexOf('meta') !== -1;
+
+  // @ts-ignore
+  event.key = key;
+
+  return event;
+}
+
+/**
+ * Fires a keyboard event on a specific node. This event bubbles and is
+ * cancellable.
+ */
+export function keyEventOn(
+  target: Element,
+  type: string,
+  keyCode: number,
+  modifiers: string | string[] = [],
+  key?: string
+) {
+  target.dispatchEvent(keyboardEventFor(type, keyCode, modifiers, key));
+}
+
+/**
+ * Fires a 'keydown' event on a specific node. This event bubbles and is
+ * cancellable.
+ */
+export function keyDownOn(
+  target: Element,
+  keyCode: number,
+  modifiers: string | string[] = [],
+  key?: string
+) {
+  keyEventOn(target, 'keydown', keyCode, modifiers, key);
+}
+
+/**
+ * Fires a 'keyup' event on a specific node. This event bubbles and is
+ * cancellable.
+ */
+export function keyUpOn(
+  target: Element,
+  keyCode: number,
+  modifiers: string | string[] = [],
+  key?: string
+) {
+  keyEventOn(target, 'keyup', keyCode, modifiers, key);
+}
 
 /* istanbul ignore file */
 
