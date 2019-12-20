@@ -18,6 +18,10 @@ const HEADLESS_LAUNCHERS = {
   },
   FirefoxHeadless: {
     base: 'Firefox',
+    /** See https://stackoverflow.com/a/56136787 */
+    prefs: {
+      'toolkit.telemetry.reportingpolicy.firstRun': false
+    },
     flags: ['-headless']
   }
 };
