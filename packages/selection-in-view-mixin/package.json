@@ -1,6 +1,6 @@
 {
   "name": "@vaadin/selection-in-view-mixin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "repository": {
@@ -17,7 +17,7 @@
   "dependencies": {
     "@vaadin/keyboard-direction-mixin": "^0.1.2",
     "@vaadin/orientation-mixin": "^0.1.0",
-    "@vaadin/single-selection-mixin": "^0.1.0",
+    "@vaadin/single-selection-mixin": "^0.1.1",
     "@vaadin/slotted-items-mixin": "^0.1.2",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
