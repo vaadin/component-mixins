@@ -1,6 +1,13 @@
 import { LitElement, html, customElement } from 'lit-element';
 import { fixture } from '@open-wc/testing-helpers';
-import { enterKeyDown, enterKeyUp, spaceKeyDown, spaceKeyUp } from '@vaadin/test-helpers';
+import {
+  arrowDownKeyDown,
+  arrowDownKeyUp,
+  enterKeyDown,
+  enterKeyUp,
+  spaceKeyDown,
+  spaceKeyUp
+} from '@vaadin/test-helpers';
 import { DisabledStateMixin } from '@vaadin/disabled-state-mixin';
 import { SlottedItemsMixin } from '@vaadin/slotted-items-mixin';
 import { SelectedStateMixin } from '@vaadin/selected-state-mixin';
@@ -77,6 +84,13 @@ describe('SingleSelectionMixin', () => {
     spaceKeyUp(items[1]);
     await element.updateComplete;
     expect(element.selected).to.be.equal(1);
+  });
+
+  it('should not select an item on other key', async () => {
+    arrowDownKeyDown(items[1]);
+    arrowDownKeyUp(items[1]);
+    await element.updateComplete;
+    expect(element.selected).to.be.equal(undefined);
   });
 
   it('should select an item on child element click', async () => {

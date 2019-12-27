@@ -62,7 +62,9 @@ export const SingleSelectionMixin = <
     }
 
     protected _onKeyUp(event: KeyboardEvent) {
-      this._setSelected(event);
+      if (/^( |SpaceBar|Enter)$/.test(event.key)) {
+        this._setSelected(event);
+      }
     }
 
     private _setSelected(event: MouseEvent | KeyboardEvent) {
