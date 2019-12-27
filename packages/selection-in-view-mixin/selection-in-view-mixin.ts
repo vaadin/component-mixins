@@ -57,32 +57,20 @@ export const SelectionInViewMixin = <
     }
 
     protected _scrollToItem(item: HTMLElement) {
-      // Determine the bounds of the scroll target and item.
-      const scrollTargetRect = this._scrollTarget.getBoundingClientRect();
-      const itemRect = item.getBoundingClientRect();
-
-      // Determine how far the item is outside the viewport.
-      const bottomDelta = itemRect.bottom - scrollTargetRect.bottom;
-      const leftDelta = itemRect.left - scrollTargetRect.left;
-      const rightDelta = itemRect.right - scrollTargetRect.right;
-      const topDelta = itemRect.top - scrollTargetRect.top;
+      const idx = this.items.indexOf(item);
 
       let distance = 0;
+      const props: Array<'top' | 'bottom' | 'left' | 'right'> = this._vertical
+        ? ['top', 'bottom']
+        : ['left', 'right'];
+      const scrollerRect = this._scrollTarget.getBoundingClientRect();
+      const nextItemRect = (this.items[idx + 1] || item).getBoundingClientRect();
+      const prevItemRect = (this.items[idx - 1] || item).getBoundingClientRect();
 
-      if (this._vertical) {
-        if (bottomDelta > 0) {
-          // Scroll down
-          distance = bottomDelta;
-        } else if (topDelta < 0) {
-          // Scroll up
-          distance = Math.ceil(topDelta);
-        }
-      } else if (rightDelta > 0) {
-        // Scroll right
-        distance = rightDelta;
-      } else if (leftDelta < 0) {
-        // Scroll left
-        distance = Math.ceil(leftDelta);
+      if (nextItemRect[props[1]] >= scrollerRect[props[1]]) {
+        distance = nextItemRect[props[1]] - scrollerRect[props[1]];
+      } else if (prevItemRect[props[0]] <= scrollerRect[props[0]]) {
+        distance = prevItemRect[props[0]] - scrollerRect[props[0]];
       }
 
       this._scroll(distance);

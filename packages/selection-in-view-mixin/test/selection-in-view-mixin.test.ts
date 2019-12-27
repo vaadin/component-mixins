@@ -51,8 +51,13 @@ class SvmList extends SelectionInViewMixin(
       <style>
         :host {
           display: block;
-          width: 50px;
+          width: 100px;
           height: 50px;
+        }
+
+        :host([orientation='vertical']) {
+          width: 50px;
+          height: 100px;
         }
 
         #scroll {
