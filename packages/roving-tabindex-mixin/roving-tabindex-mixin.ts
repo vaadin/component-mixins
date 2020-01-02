@@ -33,7 +33,7 @@ export const RovingTabIndexMixin = <
     }
 
     protected _itemsChanged(items: HTMLElement[], oldItems: HTMLElement[]) {
-      super._itemsChanged && super._itemsChanged(items, oldItems); // eslint-disable-line no-unused-expressions
+      super._itemsChanged && super._itemsChanged(items, oldItems);
 
       if (items) {
         const { focused } = this;
@@ -56,7 +56,7 @@ export const RovingTabIndexMixin = <
     }
 
     protected _focus(item: HTMLElement) {
-      super._focus && super._focus(item); // eslint-disable-line no-unused-expressions
+      super._focus && super._focus(item);
       this._setTabIndex(item);
     }
   }

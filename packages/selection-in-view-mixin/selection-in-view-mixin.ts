@@ -47,7 +47,7 @@ export const SelectionInViewMixin = <
     }
 
     protected _focus(item: HTMLElement) {
-      super._focus && super._focus(item); // eslint-disable-line no-unused-expressions
+      super._focus && super._focus(item);
       this._scrollToItem(item);
     }
 
