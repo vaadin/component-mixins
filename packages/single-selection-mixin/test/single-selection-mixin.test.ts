@@ -14,6 +14,7 @@ import { SelectedStateMixin } from '@vaadin/selected-state-mixin';
 import { SingleSelectionMixin } from '../single-selection-mixin';
 
 const { expect } = chai;
+const { sinon } = window;
 
 @customElement('ssm-item')
 class SsmItem extends SelectedStateMixin(DisabledStateMixin(LitElement)) {
@@ -134,5 +135,15 @@ describe('SingleSelectionMixin', () => {
     items[1].dispatchEvent(event);
     await element.updateComplete;
     expect(element.selected).to.be.equal(undefined);
+  });
+
+  it('should fire `selected-changed` when item is selected', async () => {
+    const spy = sinon.spy();
+    element.addEventListener('selected-changed', spy);
+    items[1].click();
+    await element.updateComplete;
+    expect(spy).to.be.calledOnce;
+    expect(spy.firstCall.args[0]).to.be.instanceOf(CustomEvent);
+    expect(spy.firstCall.args[0].detail.value).to.deep.equal(element.selected);
   });
 });

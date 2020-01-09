@@ -54,6 +54,12 @@ export const SingleSelectionMixin = <
           // eslint-disable-next-line no-param-reassign
           (item as SelectedStateClass & SelectedStateInterface).selected = idx === selected;
         });
+
+        this.dispatchEvent(
+          new CustomEvent('selected-changed', {
+            detail: { value: this.selected }
+          })
+        );
       }
     }
 
