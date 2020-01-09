@@ -1,0 +1,30 @@
+{
+  "name": "@vaadin/resizable-mixin",
+  "version": "0.0.0",
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaadin/component-mixins.git",
+    "directory": "packages/resizable-mixin"
+  },
+  "main": "resizable-mixin.js",
+  "module": "resizable-mixin.js",
+  "files": [
+    "resize-observer-polyfill.d.ts*",
+    "resize-observer-polyfill.js*",
+    "resizable-*.d.ts*",
+    "resizable-*.js*"
+  ],
+  "dependencies": {
+    "lit-element": "^2.0.0",
+    "lit-html": "^1.0.0",
+    "resize-observer-polyfill": "^1.5.1"
+  },
+  "devDependencies": {
+    "@open-wc/testing-helpers": "^1.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
