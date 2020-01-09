@@ -47,8 +47,7 @@ export const ResizableMixin = <T extends Constructor<LitElement>>(
         // @ts-ignore
         Resizable._resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
           entries.forEach(entry => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (entry.target as any)._sizeChanged(entry.contentRect as DOMRect);
+            (entry.target as Resizable)._sizeChanged(entry.contentRect as DOMRect);
           });
         });
       }
