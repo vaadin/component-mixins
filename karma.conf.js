@@ -1,12 +1,18 @@
 const USING_TRAVIS = Boolean(process.env.TRAVIS);
-const USING_SL = Boolean(process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY);
+const USING_SAUCE = process.env.TEST_PLATFORM === 'sauce';
 
 const SL_LAUNCHERS = {
-  'sl-safari-11': {
+  'sl-safari-latest': {
     base: 'SauceLabs',
     browserName: 'safari',
-    version: '11',
-    platform: 'macOS 10.13'
+    platform: 'macOS 10.13',
+    version: 'latest'
+  },
+  'sl-edge-18': {
+    base: 'SauceLabs',
+    browserName: 'microsoftedge',
+    platform: 'Windows 10',
+    version: '18'
   }
 };
 
@@ -27,23 +33,17 @@ const HEADLESS_LAUNCHERS = {
 };
 
 function determineBrowsers() {
-  const browsers = [...Object.keys(HEADLESS_LAUNCHERS)];
-  if (!USING_TRAVIS) {
-    return browsers;
-  }
-  if (USING_SL) {
-    browsers.push(...Object.keys(SL_LAUNCHERS));
-  }
-  return browsers;
+  return [...Object.keys(USING_SAUCE ? SL_LAUNCHERS : HEADLESS_LAUNCHERS)];
 }
 
 module.exports = config => {
   config.set({
     basePath: '',
     frameworks: ['esm', 'mocha', 'sinon-chai', 'source-map-support'],
-
+    singleRun: true,
     browsers: determineBrowsers(),
     browserDisconnectTimeout: 300000,
+    browserDisconnectTolerance: 2,
     browserNoActivityTimeout: 360000,
     captureTimeout: 420000,
 
@@ -120,21 +120,26 @@ module.exports = config => {
     }
   });
 
-  // See https://github.com/karma-runner/karma-sauce-launcher/issues/73
-  if (USING_TRAVIS) {
+  if (USING_SAUCE) {
     config.set({
       sauceLabs: {
-        idleTimeout: 300,
         testName: 'Lit Mixins Unit Tests - CI',
-        tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+        recordVideo: false,
+        recordScreenshots: false,
+        idleTimeout: 600,
+        commandTimeout: 600,
+        maxDuration: 5400,
         username: process.env.SAUCE_USERNAME,
         accessKey: process.env.SAUCE_ACCESS_KEY
       },
-      // Attempt to de-flake Sauce Labs tests on Travis CI.
       concurrency: 10,
       transports: ['polling'],
       browserDisconnectTolerance: 3,
-      reporters: ['saucelabs', 'mocha']
+      reporters: ['dots', 'mocha']
     });
+
+    if (USING_TRAVIS) {
+      config.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+    }
   }
 };
