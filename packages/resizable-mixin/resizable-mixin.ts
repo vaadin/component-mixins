@@ -5,8 +5,6 @@ import { ResizableClass } from './resizable-class';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T = object> = new (...args: any[]) => T;
 
-const resizables = new Set();
-
 export const ResizableMixin = <T extends Constructor<LitElement>>(
   base: T
 ): T & Constructor<ResizableClass> => {
@@ -15,8 +13,6 @@ export const ResizableMixin = <T extends Constructor<LitElement>>(
 
     connectedCallback() {
       super.connectedCallback();
-
-      resizables.add(this);
 
       this._initResizeObserver().then(() => {
         const observer = Resizable._resizeObserver;
@@ -30,15 +26,9 @@ export const ResizableMixin = <T extends Constructor<LitElement>>(
     disconnectedCallback() {
       super.disconnectedCallback();
 
-      resizables.delete(this);
-
       const observer = Resizable._resizeObserver;
       if (observer) {
         observer.unobserve(this);
-
-        if (resizables.size === 0) {
-          observer.disconnect();
-        }
       }
     }
 
