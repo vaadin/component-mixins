@@ -17,7 +17,7 @@ export const ResizableMixin = <T extends Constructor<LitElement>>(
       this._initResizeObserver().then(() => {
         const observer = Resizable._resizeObserver;
 
-        if (observer && this.parentNode) {
+        if (observer && this.isConnected) {
           observer.observe(this);
         }
       });
