@@ -5,6 +5,7 @@
     "composite": true
   },
   "include": [
-    "resizable-*.ts"
+    "resizable-*.ts",
+    "resize-observer-polyfill.ts"
   ]
 }

@@ -5,34 +5,51 @@ import { ResizableClass } from './resizable-class';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T = object> = new (...args: any[]) => T;
 
+const resizables = new Set();
+
 export const ResizableMixin = <T extends Constructor<LitElement>>(
   base: T
 ): T & Constructor<ResizableClass> => {
   class Resizable extends base {
-    private _resizeObserver?: ResizeObserver;
+    protected static _resizeObserver?: ResizeObserver;
 
     connectedCallback() {
       super.connectedCallback();
 
+      resizables.add(this);
+
       this._initResizeObserver().then(() => {
-        this._resizeObserver && this._resizeObserver.observe(this);
+        const observer = Resizable._resizeObserver;
+        observer && observer.observe(this);
+        resizables.add(this);
       });
     }
 
     disconnectedCallback() {
       super.disconnectedCallback();
 
-      this._resizeObserver && this._resizeObserver.disconnect();
+      const observer = Resizable._resizeObserver;
+      if (observer) {
+        observer.unobserve(this);
+        resizables.delete(this);
+
+        if (resizables.size === 0) {
+          observer.disconnect();
+        }
+      }
     }
 
     private async _initResizeObserver() {
-      if (this._resizeObserver == null) {
+      const observer = Resizable._resizeObserver;
+      if (observer == null) {
         const ResizeObserver = await getResizeObserver();
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
-        this._resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
-          this._sizeChanged(entries[0].contentRect as DOMRect);
+        Resizable._resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
+          entries.forEach(entry => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (entry.target as any)._sizeChanged(entry.contentRect as DOMRect);
+          });
         });
       }
     }
