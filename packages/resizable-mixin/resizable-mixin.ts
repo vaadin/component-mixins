@@ -20,18 +20,21 @@ export const ResizableMixin = <T extends Constructor<LitElement>>(
 
       this._initResizeObserver().then(() => {
         const observer = Resizable._resizeObserver;
-        observer && observer.observe(this);
-        resizables.add(this);
+
+        if (observer && this.parentNode) {
+          observer.observe(this);
+        }
       });
     }
 
     disconnectedCallback() {
       super.disconnectedCallback();
 
+      resizables.delete(this);
+
       const observer = Resizable._resizeObserver;
       if (observer) {
         observer.unobserve(this);
-        resizables.delete(this);
 
         if (resizables.size === 0) {
           observer.disconnect();
