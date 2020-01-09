@@ -8,6 +8,12 @@ A set of mixins and helpers for future versions of Vaadin components, built with
 yarn
 ```
 
+## Build project
+
+```sh
+yarn build
+```
+
 ## Run ESLint
 
 ```sh
