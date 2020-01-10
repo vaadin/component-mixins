@@ -20,6 +20,7 @@
         "sinon": false
       },
       "rules": {
+        "no-restricted-syntax": "off",
         "no-unused-expressions": "off"
       }
     }
