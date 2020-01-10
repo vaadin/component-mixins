@@ -18,7 +18,7 @@
   "dependencies": {
     "@polymer/polymer": "^3.3.0",
     "@vaadin/themable-element": "^0.1.2",
-    "@vaadin/vaadin-element-mixin": "^2.2.0",
+    "@vaadin/vaadin-element-mixin": "^2.3.0",
     "lit-element": "^2.0.0"
   },
   "devDependencies": {
