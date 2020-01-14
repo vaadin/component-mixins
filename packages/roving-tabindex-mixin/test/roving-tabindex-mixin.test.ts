@@ -1,6 +1,6 @@
 import { LitElement, html, customElement } from 'lit-element';
 import { fixture } from '@open-wc/testing-helpers';
-import { arrowDown, arrowLeft, arrowRight, arrowUp, end, home, tab } from '@vaadin/test-helpers';
+import { arrowDown, arrowUp, end, home, tab } from '@vaadin/test-helpers';
 import { KeyboardDirectionMixin } from '@vaadin/keyboard-direction-mixin';
 import { SlottedItemsMixin } from '@vaadin/slotted-items-mixin';
 import { RovingTabIndexMixin } from '../roving-tabindex-mixin';
@@ -76,20 +76,9 @@ describe('RovingTabIndexMixin', () => {
     expectTabIndexZero(1);
   });
 
-  it('should move tabIndex to next item on "arrow-right" key', () => {
-    arrowRight(element);
-    expectTabIndexZero(1);
-  });
-
   it('should move tabIndex to prev item on "arrow-up" key', () => {
     arrowDown(element);
     arrowUp(element);
-    expectTabIndexZero(0);
-  });
-
-  it('should move tabIndex to prev item on "arrow-left" key', () => {
-    arrowRight(element);
-    arrowLeft(element);
     expectTabIndexZero(0);
   });
 
