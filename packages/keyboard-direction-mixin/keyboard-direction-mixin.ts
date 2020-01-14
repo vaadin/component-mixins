@@ -85,16 +85,19 @@ export const KeyboardDirectionMixin = <
       let idx;
       let increment;
 
+      const isRTL = !this._isVertical() && this.getAttribute('dir') === 'rtl';
+      const dirIncrement = isRTL ? -1 : 1;
+
       if (this._isPrevKey(key)) {
-        increment = -1;
-        idx = currentIdx - 1;
+        increment = -dirIncrement;
+        idx = currentIdx - dirIncrement;
       } else if (this._isNextKey(key)) {
-        increment = 1;
-        idx = currentIdx + 1;
-      } else if (key === 'Home') {
+        increment = dirIncrement;
+        idx = currentIdx + dirIncrement;
+      } else if ((key === 'Home' && !isRTL) || (key === 'End' && isRTL)) {
         increment = 1;
         idx = 0;
-      } else if (key === 'End') {
+      } else if ((key === 'End' && !isRTL) || (key === 'Home' && isRTL)) {
         increment = -1;
         idx = items.length - 1;
       }
@@ -109,12 +112,16 @@ export const KeyboardDirectionMixin = <
       }
     }
 
+    protected _isVertical() {
+      return false;
+    }
+
     protected _isPrevKey(key: string) {
-      return key === 'ArrowUp' || key === 'ArrowLeft';
+      return this._isVertical() ? key === 'ArrowUp' : key === 'ArrowLeft';
     }
 
     protected _isNextKey(key: string) {
-      return key === 'ArrowDown' || key === 'ArrowRight';
+      return this._isVertical() ? key === 'ArrowDown' : key === 'ArrowRight';
     }
 
     protected _focus(item: HTMLElement) {
