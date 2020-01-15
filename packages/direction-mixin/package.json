@@ -1,0 +1,24 @@
+{
+  "name": "@vaadin/direction-mixin",
+  "version": "0.0.0",
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaadin/component-mixins.git",
+    "directory": "packages/direction-mixin"
+  },
+  "main": "direction-mixin.js",
+  "module": "direction-mixin.js",
+  "files": [
+    "direction-*.d.ts*",
+    "direction-*.js*"
+  ],
+  "dependencies": {
+    "lit-element": "^2.0.0",
+    "lit-html": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
