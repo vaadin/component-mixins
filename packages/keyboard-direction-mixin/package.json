@@ -15,6 +15,7 @@
     "keyboard-direction-*.js*"
   ],
   "dependencies": {
+    "@vaadin/direction-mixin": "^0.0.0",
     "@vaadin/slotted-items-mixin": "^0.1.2",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"

@@ -1,5 +1,7 @@
 import { PropertyValues } from 'lit-element';
 import { SlottedItemsInterface } from '@vaadin/slotted-items-mixin';
+import { DirectionMixin } from '@vaadin/direction-mixin/direction-mixin.js';
+import { DirectionClass } from '@vaadin/direction-mixin/direction-class.js';
 import { KeyboardDirectionClass } from './keyboard-direction-class';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,11 +49,13 @@ export const getAvailableIndex = (
 };
 
 export const KeyboardDirectionMixin = <
-  T extends Constructor<SlottedItemsInterface & KeyboardDirectionClass>
+  T extends Constructor<SlottedItemsInterface & KeyboardDirectionClass & DirectionClass>
 >(
   base: T
-): Constructor<KeyboardDirectionClass & KeyboardDirectionInterface> & T => {
-  class KeyboardDirection extends base {
+): Constructor<DirectionClass & KeyboardDirectionClass & KeyboardDirectionInterface> & T => {
+  const Base = DirectionMixin(base);
+
+  class KeyboardDirection extends Base {
     focus() {
       const first = this.items.length ? this.items[0] : null;
 
@@ -85,7 +89,7 @@ export const KeyboardDirectionMixin = <
       let idx;
       let increment;
 
-      const isRTL = !this._isVertical() && this.getAttribute('dir') === 'rtl';
+      const isRTL = !this._vertical && this.getAttribute('dir') === 'rtl';
       const dirIncrement = isRTL ? -1 : 1;
 
       if (this._isPrevKey(key)) {
@@ -112,16 +116,12 @@ export const KeyboardDirectionMixin = <
       }
     }
 
-    protected _isVertical() {
-      return false;
-    }
-
     protected _isPrevKey(key: string) {
-      return this._isVertical() ? key === 'ArrowUp' : key === 'ArrowLeft';
+      return this._vertical ? key === 'ArrowUp' : key === 'ArrowLeft';
     }
 
     protected _isNextKey(key: string) {
-      return this._isVertical() ? key === 'ArrowDown' : key === 'ArrowRight';
+      return this._vertical ? key === 'ArrowDown' : key === 'ArrowRight';
     }
 
     protected _focus(item: HTMLElement) {

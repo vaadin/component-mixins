@@ -15,6 +15,7 @@
     "selection-in-view-*.js*"
   ],
   "dependencies": {
+    "@vaadin/direction-mixin": "^0.0.0",
     "@vaadin/keyboard-direction-mixin": "^0.1.2",
     "@vaadin/orientation-mixin": "^0.1.0",
     "@vaadin/single-selection-mixin": "^0.1.2",
