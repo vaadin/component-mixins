@@ -49,8 +49,10 @@ describe('SelectedStateMixin', () => {
 
   it('should set selected property to false when disabled is set to true', async () => {
     element.selected = true;
+    await element.updateComplete;
     element.disabled = true;
     await element.updateComplete;
     expect(element.selected).to.equal(false);
+    expect(element.hasAttribute('selected')).to.equal(false);
   });
 });
