@@ -29,6 +29,10 @@ class RtmElement extends RovingTabIndexMixin(
       </div>
     `;
   }
+
+  protected get _vertical() {
+    return true;
+  }
 }
 
 describe('RovingTabIndexMixin', () => {
