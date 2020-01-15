@@ -26,11 +26,11 @@ export const SelectedStateMixin = <
     @property({ type: Boolean, reflect: true }) selected = false;
 
     protected update(props: PropertyValues) {
-      super.update(props);
-
       if (props.has('disabled') && this.disabled) {
         this.selected = false;
       }
+
+      super.update(props);
     }
 
     protected updated(props: PropertyValues) {
