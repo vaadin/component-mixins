@@ -1,7 +1,7 @@
 import { PropertyValues } from 'lit-element';
+import { DirectionClass } from '@vaadin/direction-mixin/direction-class';
 import { KeyboardDirectionInterface } from '@vaadin/keyboard-direction-mixin';
 import { KeyboardDirectionClass } from '@vaadin/keyboard-direction-mixin/keyboard-direction-class';
-import { OrientationInterface } from '@vaadin/orientation-mixin';
 import { SlottedItemsInterface } from '@vaadin/slotted-items-mixin';
 import { SlottedItemsClass } from '@vaadin/slotted-items-mixin/slotted-items-class';
 import { SingleSelectionInterface } from '@vaadin/single-selection-mixin';
@@ -16,9 +16,9 @@ export const SelectionInViewMixin = <
     SelectionInViewClass &
       SingleSelectionInterface &
       SingleSelectionClass &
-      OrientationInterface &
       KeyboardDirectionInterface &
       KeyboardDirectionClass &
+      DirectionClass &
       SlottedItemsInterface &
       SlottedItemsClass
   >
@@ -29,10 +29,6 @@ export const SelectionInViewMixin = <
     /* istanbul ignore next */
     protected get _scrollTarget() {
       return this;
-    }
-
-    protected get _vertical() {
-      return this.orientation === 'vertical';
     }
 
     protected updated(props: PropertyValues) {

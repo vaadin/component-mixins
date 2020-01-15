@@ -1,4 +1,6 @@
-import { LitElement, property, PropertyValues } from 'lit-element';
+import { property, PropertyValues } from 'lit-element';
+import { DirectionMixin } from '@vaadin/direction-mixin/direction-mixin.js';
+import { DirectionClass } from '@vaadin/direction-mixin/direction-class.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T = object> = new (...args: any[]) => T;
@@ -7,10 +9,12 @@ export interface OrientationInterface {
   orientation: string | null | undefined;
 }
 
-export const OrientationMixin = <T extends Constructor<LitElement>>(
+export const OrientationMixin = <T extends Constructor<DirectionClass>>(
   base: T
 ): T & Constructor<OrientationInterface> => {
-  class Orientation extends base {
+  const Base = DirectionMixin(base);
+
+  class Orientation extends Base {
     /**
      * Set element disposition. Possible values are `horizontal|vertical`.
      * @type {`horizontal|vertical}
@@ -29,6 +33,10 @@ export const OrientationMixin = <T extends Constructor<LitElement>>(
       if (props.has('orientation')) {
         this._setOrientation();
       }
+    }
+
+    protected get _vertical() {
+      return this.orientation === 'vertical';
     }
 
     private _setOrientation() {

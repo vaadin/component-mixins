@@ -26,7 +26,7 @@ class KdmVerticalElement extends KeyboardDirectionMixin(SlottedItemsMixin(LitEle
     `;
   }
 
-  protected _isVertical() {
+  protected get _vertical() {
     return true;
   }
 }
@@ -50,7 +50,7 @@ class KdmHorizontalElement extends KeyboardDirectionMixin(SlottedItemsMixin(LitE
     `;
   }
 
-  protected _isVertical() {
+  protected get _vertical() {
     return false;
   }
 }

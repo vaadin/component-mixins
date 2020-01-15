@@ -15,8 +15,8 @@
     "selection-in-view-*.js*"
   ],
   "dependencies": {
+    "@vaadin/direction-mixin": "^0.0.0",
     "@vaadin/keyboard-direction-mixin": "^0.1.2",
-    "@vaadin/orientation-mixin": "^0.1.0",
     "@vaadin/single-selection-mixin": "^0.1.2",
     "@vaadin/slotted-items-mixin": "^0.1.2",
     "lit-element": "^2.0.0",
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@open-wc/testing-helpers": "^1.2.1",
     "@vaadin/disabled-state-mixin": "^0.1.0",
+    "@vaadin/orientation-mixin": "^0.1.0",
     "@vaadin/selected-state-mixin": "^0.1.0",
     "@vaadin/test-helpers": "^0.1.2"
   },
