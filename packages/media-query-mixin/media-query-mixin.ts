@@ -1,13 +1,11 @@
-import { UpdatingElement, PropertyDeclaration } from 'lit-element/lib/updating-element.js';
-
-export abstract class MediaQueryClass extends UpdatingElement {
-  static mediaQueries: { [key: string]: unknown };
-}
+import { LitElement } from 'lit-element';
+import { PropertyDeclaration } from 'lit-element/lib/updating-element.js';
+import { MediaQueryClass } from './media-query-class';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T = object> = new (...args: any[]) => T;
 
-export const MediaQueryMixin = <T extends Constructor<UpdatingElement>>(
+export const MediaQueryMixin = <T extends Constructor<LitElement>>(
   base: T
 ): T & Constructor<MediaQueryClass> => {
   class MediaQuery extends base {
@@ -15,9 +13,13 @@ export const MediaQueryMixin = <T extends Constructor<UpdatingElement>>(
       return {};
     }
 
-    private static _mediaQueries: { [key: string]: { query: MediaQueryList; prop: string } } = {};
+    private static _mediaQueries: { [prop: string]: { query: MediaQueryList } } = {};
 
-    private _boundQueryHandlers: { [key: string]: () => void } = {};
+    private static _queryProps: Set<string> = new Set();
+
+    private _boundQueries: {
+      [prop: string]: { handler: () => void; state?: 'attr' | 'query' };
+    } = {};
 
     /**
      * Extend the LitElement `createProperty` method to map properties to events
@@ -26,8 +28,7 @@ export const MediaQueryMixin = <T extends Constructor<UpdatingElement>>(
       const mq = (this.mediaQueries as { [key: string]: unknown })[name as string];
       const needQuery = typeof mq === 'string';
 
-      // @ts-ignore
-      super.createProperty(
+      ((base as unknown) as typeof LitElement).createProperty(
         name,
         options
         /*
@@ -43,34 +44,54 @@ export const MediaQueryMixin = <T extends Constructor<UpdatingElement>>(
       if (needQuery) {
         const query = window.matchMedia(mq as string);
         const prop = name as string;
-        this._mediaQueries[mq as string] = { prop, query };
+        this._mediaQueries[prop as string] = { query };
+        this._queryProps.add(prop);
       }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(...args: any[]) {
+      super(...args);
+
+      const { _queryProps: props, _mediaQueries: queries } = MediaQuery;
+
+      props.forEach(prop => {
+        const { query } = queries[prop];
+        const handler = () => {
+          const { state } = this._boundQueries[prop];
+          if (state !== 'attr') {
+            this._boundQueries[prop].state = 'query';
+            ((this as {}) as { [key: string]: unknown })[prop] = query.matches;
+          }
+        };
+        // Store handlers in constructor to handle default attribute value if set,
+        // which can be done in attributeChangedCallback before connectedCallback
+        this._boundQueries[prop] = { handler };
+      });
     }
 
     connectedCallback() {
       super.connectedCallback();
 
-      const queries = MediaQuery._mediaQueries;
+      const { _queryProps: props, _mediaQueries: queries } = MediaQuery;
 
-      Object.keys(queries).forEach(key => {
-        const { query, prop } = queries[key];
-        const handler = () => {
-          ((this as {}) as { [key: string]: unknown })[prop] = query.matches;
-        };
+      props.forEach(prop => {
+        const { query } = queries[prop];
+        const { handler } = this._boundQueries[prop];
         query.addListener(handler);
-        this._boundQueryHandlers[key] = handler;
       });
     }
 
     disconnectedCallback() {
       super.disconnectedCallback();
 
-      const queries = MediaQuery._mediaQueries;
+      const { _queryProps: props, _mediaQueries: queries } = MediaQuery;
 
-      Object.keys(queries).forEach(key => {
-        const handler = this._boundQueryHandlers[key];
-        queries[key].query.removeListener(handler);
-        delete this._boundQueryHandlers[key];
+      props.forEach(prop => {
+        const { query } = queries[prop];
+        const { handler } = this._boundQueries[prop];
+        query.removeListener(handler);
+        delete this._boundQueries[prop];
       });
     }
   }

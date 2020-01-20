@@ -5,6 +5,6 @@
     "composite": true
   },
   "include": [
-    "media-query-mixin.ts"
+    "media-query-*.ts"
   ]
 }
