@@ -12,7 +12,7 @@ const runQuery = (query: string, matches: boolean) => {
   listeners[query] && listeners[query]();
 };
 
-const FULLSCREEN = '(max-width: 420px) and (max-heigh: 420px)';
+const FULLSCREEN = '(max-width: 420px)';
 const RESPONSIVE = '(max-width: 600px)';
 
 const origMatchMedia = window.matchMedia;
