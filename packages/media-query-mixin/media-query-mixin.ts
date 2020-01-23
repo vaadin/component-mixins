@@ -23,9 +23,7 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
 
     private static _queryProps: Set<string> = new Set();
 
-    private _boundQueries: {
-      [prop: string]: { handler: () => void };
-    } = {};
+    private _boundQueries: { [prop: string]: () => void } = {};
 
     /**
      * Extend the LitElement `createProperty` method to watch media query.
@@ -91,7 +89,7 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
 
         // Store handlers in constructor to handle default attribute value if set,
         // which can be done in attributeChangedCallback before connectedCallback
-        this._boundQueries[prop] = { handler };
+        this._boundQueries[prop] = handler;
       });
     }
 
@@ -102,7 +100,7 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
 
       props.forEach(prop => {
         const { query } = queries[prop];
-        const { handler } = this._boundQueries[prop];
+        const handler = this._boundQueries[prop];
         query.addListener(handler);
         // Set default value
         handler();
@@ -116,7 +114,7 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
 
       props.forEach(prop => {
         const { query } = queries[prop];
-        const { handler } = this._boundQueries[prop];
+        const handler = this._boundQueries[prop];
         query.removeListener(handler);
         delete this._boundQueries[prop];
       });
