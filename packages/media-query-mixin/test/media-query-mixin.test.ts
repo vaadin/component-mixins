@@ -1,6 +1,6 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import { LitElement, html, customElement } from 'lit-element';
 import { fixture } from '@open-wc/testing-helpers';
-import { MediaQueryMixin } from '../media-query-mixin';
+import { MediaQueryMixin, mediaProperty } from '../media-query-mixin';
 
 const { expect } = chai;
 
@@ -39,58 +39,46 @@ class MqElementBase extends MediaQueryMixin(LitElement) {
 }
 
 describe('MediaQueryMixin', () => {
-  describe('static get mediaQueries', () => {
+  describe('mediaProperty decorator', () => {
     @customElement('mq-basic-element')
     class MqBasicElement extends MqElementBase {
-      static get mediaQueries() {
-        return {
-          fullscreen: FULLSCREEN
-        };
-      }
-
-      @property({ type: Boolean }) fullscreen: boolean | null | undefined;
+      @mediaProperty({ media: FULLSCREEN }) fullscreen: boolean | null | undefined;
     }
 
     let element: MqBasicElement;
+
+    before(() => {
+      runQuery(FULLSCREEN, true);
+    });
 
     beforeEach(async () => {
       element = await fixture(`<mq-basic-element></mq-basic-element>`);
     });
 
-    it('should set property value to undefined by default', () => {
-      expect(element.fullscreen).to.be.undefined;
-    });
-
-    it('should set property value to true when query matches', async () => {
-      runQuery(FULLSCREEN, true);
-      await element.updateComplete;
+    it('should set default property value based on media query', () => {
       expect(element.fullscreen).to.be.true;
     });
 
-    it('should allow to override property value using setAttribute', async () => {
-      element.setAttribute('fullscreen', '');
-      await element.updateComplete;
-      expect(element.fullscreen).to.be.true;
-    });
-
-    // TODO
-    it.skip('should not discard overridden value on media query change', async () => {
-      element.setAttribute('fullscreen', '');
-      await element.updateComplete;
+    it('should toggle property value when query does not match', async () => {
       runQuery(FULLSCREEN, false);
       await element.updateComplete;
-      expect(element.fullscreen).to.be.true;
+      expect(element.fullscreen).to.be.false;
     });
 
-    // TODO
-    it.skip('should handle media query change after removeAttribute', async () => {
+    it('should disallow direct property modification attempt', async () => {
+      runQuery(FULLSCREEN, false);
+      await element.updateComplete;
+      element.fullscreen = true;
+      await element.updateComplete;
+      expect(element.fullscreen).to.be.false;
+    });
+
+    it('should disallow property modification using attribute', async () => {
+      runQuery(FULLSCREEN, false);
+      await element.updateComplete;
       element.setAttribute('fullscreen', '');
       await element.updateComplete;
-      element.removeAttribute('fullscreen');
-      await element.updateComplete;
-      runQuery(FULLSCREEN, true);
-      await element.updateComplete;
-      expect(element.fullscreen).to.be.true;
+      expect(element.fullscreen).to.be.false;
     });
   });
 
@@ -99,16 +87,13 @@ describe('MediaQueryMixin', () => {
 
     @customElement('mq-custom-element')
     class MqCustomElement extends MqElementBase {
-      static get mediaQueries() {
-        return {
-          responsive: window
-            .getComputedStyle(document.documentElement)
-            .getPropertyValue('--vaadin-responsive')
-            .trim()
-        };
-      }
-
-      @property({ type: Boolean }) responsive: boolean | null | undefined;
+      @mediaProperty({
+        media: window
+          .getComputedStyle(document.documentElement)
+          .getPropertyValue('--vaadin-responsive')
+          .trim()
+      })
+      responsive: boolean | null | undefined;
     }
 
     let element: MqCustomElement;
@@ -135,6 +120,27 @@ describe('MediaQueryMixin', () => {
       runQuery(BREAKPOINT, false);
       await element.updateComplete;
       expect(element.responsive).to.be.true;
+    });
+  });
+
+  describe('default value', () => {
+    @customElement('mq-default-element')
+    class MqDefaultElement extends MqElementBase {
+      @mediaProperty({ media: FULLSCREEN }) fullscreen: boolean | null | undefined = true;
+    }
+
+    let element: MqDefaultElement;
+
+    before(() => {
+      runQuery(FULLSCREEN, false);
+    });
+
+    beforeEach(async () => {
+      element = await fixture(`<mq-default-element></mq-default-element>`);
+    });
+
+    it('should ignore user-defined default value', () => {
+      expect(element.fullscreen).to.be.false;
     });
   });
 

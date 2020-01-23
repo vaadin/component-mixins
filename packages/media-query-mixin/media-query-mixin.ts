@@ -1,51 +1,72 @@
-import { LitElement } from 'lit-element';
+import { LitElement, property } from 'lit-element';
 import { PropertyDeclaration } from 'lit-element/lib/updating-element.js';
-import { MediaQueryClass } from './media-query-class';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function mediaProperty(opts?: MediaDeclaration): (proto: object, name?: PropertyKey) => any {
+  return property(opts as PropertyDeclaration);
+}
+
+export interface MediaDeclaration {
+  readonly media?: string;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T = object> = new (...args: any[]) => T;
 
 export const MediaQueryMixin = <T extends Constructor<LitElement>>(
   base: T
-): T & Constructor<MediaQueryClass> => {
+): T & Constructor<LitElement> => {
   class MediaQuery extends base {
-    static get mediaQueries() {
-      return {};
-    }
-
-    private static _mediaQueries: { [prop: string]: { query: MediaQueryList } } = {};
+    private static _mediaQueries: {
+      [prop: string]: { query: MediaQueryList; updating?: boolean };
+    } = {};
 
     private static _queryProps: Set<string> = new Set();
 
     private _boundQueries: {
-      [prop: string]: { handler: () => void; state?: 'attr' | 'query' };
+      [prop: string]: { handler: () => void };
     } = {};
 
     /**
-     * Extend the LitElement `createProperty` method to map properties to events
+     * Extend the LitElement `createProperty` method to watch media query.
      */
     static createProperty(name: PropertyKey, options: PropertyDeclaration) {
-      const mq = (this.mediaQueries as { [key: string]: unknown })[name as string];
-      const needQuery = typeof mq === 'string';
+      const { media } = options as MediaDeclaration;
+      const prop = name as string;
 
-      ((base as unknown) as typeof LitElement).createProperty(
-        name,
-        options
-        /*
-        needQuery
-          ? {
-              ...options,
-              noAccessor: true
-            }
-          : options
-        */
-      );
+      const isMediaString = typeof media === 'string';
+      const opts = isMediaString
+        ? {
+            type: Boolean,
+            attribute: false,
+            noAccessor: true,
+            media
+          }
+        : options;
 
-      if (needQuery) {
-        const query = window.matchMedia(mq as string);
-        const prop = name as string;
-        this._mediaQueries[prop as string] = { query };
+      ((base as unknown) as typeof LitElement).createProperty(name, opts);
+
+      if (isMediaString) {
+        const query = window.matchMedia(media as string);
+        this._mediaQueries[prop] = { query };
         this._queryProps.add(prop);
+
+        const key = `__${prop}`;
+        Object.defineProperty(this.prototype, prop, {
+          get(): boolean | null | undefined {
+            return (this as { [key: string]: boolean | null | undefined })[key];
+          },
+          set(this: MediaQuery, value: boolean | null | undefined) {
+            if (MediaQuery._mediaQueries[prop].updating !== true) {
+              return;
+            }
+            const oldValue = ((this as {}) as { [key: string]: unknown })[prop];
+            ((this as {}) as { [key: string]: unknown })[key] = value;
+            this.requestUpdate(name, oldValue);
+          },
+          configurable: true,
+          enumerable: true
+        });
       }
     }
 
@@ -58,12 +79,16 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
       props.forEach(prop => {
         const { query } = queries[prop];
         const handler = () => {
-          const { state } = this._boundQueries[prop];
-          if (state !== 'attr') {
-            this._boundQueries[prop].state = 'query';
-            ((this as {}) as { [key: string]: unknown })[prop] = query.matches;
-          }
+          // allow property modification
+          queries[prop].updating = true;
+          ((this as {}) as { [key: string]: unknown })[prop] = query.matches;
+
+          // disallow property modification
+          Promise.resolve().then(() => {
+            queries[prop].updating = false;
+          });
         };
+
         // Store handlers in constructor to handle default attribute value if set,
         // which can be done in attributeChangedCallback before connectedCallback
         this._boundQueries[prop] = { handler };
@@ -79,6 +104,8 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
         const { query } = queries[prop];
         const { handler } = this._boundQueries[prop];
         query.addListener(handler);
+        // Set default value
+        handler();
       });
     }
 
