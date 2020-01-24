@@ -66,9 +66,8 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    constructor(...args: any[]) {
-      super(...args);
+    connectedCallback() {
+      super.connectedCallback();
 
       const queries = MediaQuery._mediaQueries;
 
@@ -80,21 +79,9 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
           ((this as {}) as { [key: string]: unknown })[prop] = query.matches;
         };
 
-        // Store handlers in constructor to handle default attribute value if set,
-        // which can be done in attributeChangedCallback before connectedCallback
-        this._boundQueries[prop] = handler;
-      });
-    }
-
-    connectedCallback() {
-      super.connectedCallback();
-
-      const queries = MediaQuery._mediaQueries;
-
-      Object.keys(queries).forEach(prop => {
-        const { query } = queries[prop];
-        const handler = this._boundQueries[prop];
         query.addListener(handler);
+        this._boundQueries[prop] = handler;
+
         // Set default value
         handler();
       });
