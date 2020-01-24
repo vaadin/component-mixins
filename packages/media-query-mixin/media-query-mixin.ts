@@ -46,6 +46,8 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
         const query = window.matchMedia(media as string);
         this._mediaQueries[prop] = { query };
 
+        // Create custom accessors to disallow external property modifications. See original code at
+        // https://github.com/Polymer/lit-element/blob/41e9fd3/src/lib/updating-element.ts#L306-L320
         const key = `__${prop}`;
         Object.defineProperty(this.prototype, prop, {
           get(): boolean | null | undefined {
