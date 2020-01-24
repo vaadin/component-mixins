@@ -21,8 +21,6 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
       [prop: string]: { query: MediaQueryList; updating?: boolean };
     } = {};
 
-    private static _queryProps: Set<string> = new Set();
-
     private _boundQueries: { [prop: string]: () => void } = {};
 
     /**
@@ -47,7 +45,6 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
       if (isMediaString) {
         const query = window.matchMedia(media as string);
         this._mediaQueries[prop] = { query };
-        this._queryProps.add(prop);
 
         const key = `__${prop}`;
         Object.defineProperty(this.prototype, prop, {
@@ -73,9 +70,9 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
     constructor(...args: any[]) {
       super(...args);
 
-      const { _queryProps: props, _mediaQueries: queries } = MediaQuery;
+      const queries = MediaQuery._mediaQueries;
 
-      props.forEach(prop => {
+      Object.keys(queries).forEach(prop => {
         const { query } = queries[prop];
         const handler = () => {
           // allow property modification
@@ -92,9 +89,9 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
     connectedCallback() {
       super.connectedCallback();
 
-      const { _queryProps: props, _mediaQueries: queries } = MediaQuery;
+      const queries = MediaQuery._mediaQueries;
 
-      props.forEach(prop => {
+      Object.keys(queries).forEach(prop => {
         const { query } = queries[prop];
         const handler = this._boundQueries[prop];
         query.addListener(handler);
@@ -106,9 +103,9 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
     disconnectedCallback() {
       super.disconnectedCallback();
 
-      const { _queryProps: props, _mediaQueries: queries } = MediaQuery;
+      const queries = MediaQuery._mediaQueries;
 
-      props.forEach(prop => {
+      Object.keys(queries).forEach(prop => {
         const { query } = queries[prop];
         const handler = this._boundQueries[prop];
         query.removeListener(handler);
