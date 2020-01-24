@@ -61,6 +61,7 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
             const oldValue = ((this as {}) as { [key: string]: unknown })[prop];
             ((this as {}) as { [key: string]: unknown })[key] = value;
             this.requestUpdate(name, oldValue);
+            MediaQuery._mediaQueries[prop].updating = false;
           },
           configurable: true,
           enumerable: true
@@ -80,11 +81,6 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
           // allow property modification
           queries[prop].updating = true;
           ((this as {}) as { [key: string]: unknown })[prop] = query.matches;
-
-          // disallow property modification
-          Promise.resolve().then(() => {
-            queries[prop].updating = false;
-          });
         };
 
         // Store handlers in constructor to handle default attribute value if set,
