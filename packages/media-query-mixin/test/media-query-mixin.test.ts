@@ -1,34 +1,12 @@
 import { LitElement, html, customElement } from 'lit-element';
 import { fixture } from '@open-wc/testing-helpers';
+import { matchMedia, resetMatchMedia, restoreMatchMedia } from '@vaadin/test-helpers';
 import { MediaQueryMixin, mediaProperty } from '../media-query-mixin';
 
 const { expect } = chai;
 
-const listeners: { [key: string]: () => void } = {};
-const queryMatches: { [key: string]: boolean } = {};
-
-const runQuery = (query: string, matches: boolean) => {
-  queryMatches[query] = matches;
-  listeners[query] && listeners[query]();
-};
-
 const FULLSCREEN = '(max-width: 420px)';
 const RESPONSIVE = '(max-width: 600px)';
-
-const origMatchMedia = window.matchMedia;
-window.matchMedia = (query: string) => {
-  return {
-    get matches() {
-      return queryMatches[query] as boolean;
-    },
-    addListener(listener: () => void) {
-      listeners[query] = listener;
-    },
-    removeListener(_listener) {
-      delete listeners[query];
-    }
-  } as MediaQueryList;
-};
 
 class MqElementBase extends MediaQueryMixin(LitElement) {
   render() {
@@ -48,7 +26,7 @@ describe('MediaQueryMixin', () => {
     let element: MqBasicElement;
 
     before(() => {
-      runQuery(FULLSCREEN, true);
+      matchMedia(FULLSCREEN, true);
     });
 
     beforeEach(async () => {
@@ -60,13 +38,13 @@ describe('MediaQueryMixin', () => {
     });
 
     it('should toggle property value when query does not match', async () => {
-      runQuery(FULLSCREEN, false);
+      matchMedia(FULLSCREEN, false);
       await element.updateComplete;
       expect(element.fullscreen).to.be.false;
     });
 
     it('should disallow direct property modification attempt', async () => {
-      runQuery(FULLSCREEN, false);
+      matchMedia(FULLSCREEN, false);
       await element.updateComplete;
       element.fullscreen = true;
       await element.updateComplete;
@@ -74,7 +52,7 @@ describe('MediaQueryMixin', () => {
     });
 
     it('should disallow property modification using attribute', async () => {
-      runQuery(FULLSCREEN, false);
+      matchMedia(FULLSCREEN, false);
       await element.updateComplete;
       element.setAttribute('fullscreen', '');
       await element.updateComplete;
@@ -100,7 +78,7 @@ describe('MediaQueryMixin', () => {
 
     beforeEach(async () => {
       element = await fixture(`<mq-custom-element></mq-custom-element>`);
-      runQuery(RESPONSIVE, true);
+      matchMedia(RESPONSIVE, true);
       await element.updateComplete;
     });
 
@@ -109,7 +87,7 @@ describe('MediaQueryMixin', () => {
     });
 
     it('should change property value when media query changes', async () => {
-      runQuery(RESPONSIVE, false);
+      matchMedia(RESPONSIVE, false);
       await element.updateComplete;
       expect(element.responsive).to.be.false;
     });
@@ -117,7 +95,7 @@ describe('MediaQueryMixin', () => {
     it('should not change when custom CSS property value changes', async () => {
       const BREAKPOINT = '(min-width: 768px)';
       document.documentElement.style.setProperty('--vaadin-responsive', BREAKPOINT);
-      runQuery(BREAKPOINT, false);
+      matchMedia(BREAKPOINT, false);
       await element.updateComplete;
       expect(element.responsive).to.be.true;
     });
@@ -132,7 +110,7 @@ describe('MediaQueryMixin', () => {
     let element: MqDefaultElement;
 
     before(() => {
-      runQuery(FULLSCREEN, false);
+      matchMedia(FULLSCREEN, false);
     });
 
     beforeEach(async () => {
@@ -145,12 +123,10 @@ describe('MediaQueryMixin', () => {
   });
 
   afterEach(() => {
-    Object.keys(queryMatches).forEach(key => {
-      delete queryMatches[key];
-    });
+    resetMatchMedia();
   });
 
   after(() => {
-    window.matchMedia = origMatchMedia;
+    restoreMatchMedia();
   });
 });
