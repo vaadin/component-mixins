@@ -1,11 +1,10 @@
 import { LitElement, property } from 'lit-element';
 
+type Constructor<T = object> = new (...args: any[]) => T;
+
 export interface DisabledStateInterface {
   disabled: boolean;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
 
 export const DisabledStateMixin = <T extends Constructor<LitElement>>(
   base: T
