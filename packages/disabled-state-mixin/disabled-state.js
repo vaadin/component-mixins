@@ -1,5 +1,5 @@
 export const DisabledStateMixin = base => {
-  class DisabledElement extends base {
+  class DisabledState extends base {
     static get properties() {
       return {
         disabled: {
@@ -16,5 +16,5 @@ export const DisabledStateMixin = base => {
     }
   }
 
-  return DisabledElement;
+  return DisabledState;
 };
