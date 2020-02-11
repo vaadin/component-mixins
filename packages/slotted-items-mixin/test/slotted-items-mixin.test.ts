@@ -65,5 +65,12 @@ describe('SlottedItemsMixin', () => {
       expect(spy.firstCall.args[0]).to.be.instanceOf(CustomEvent);
       expect(spy.firstCall.args[0].detail.value).to.deep.equal(element.items);
     });
+
+    it('should disallow external `items` modifications', async () => {
+      element.items = [];
+      element.requestUpdate('items');
+      await element.updateComplete;
+      expect(element.items.length).to.be.equal(3);
+    });
   });
 });
