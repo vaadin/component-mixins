@@ -44,6 +44,7 @@ describe('SingleSelectionMixin', () => {
         <ssm-list>
           <ssm-item>Item 1</ssm-item>
           <ssm-item>Item 2</ssm-item>
+          <span>&nbsp;</span>
           <ssm-item>
             <span>Item 3</span>
           </ssm-item>
@@ -55,6 +56,13 @@ describe('SingleSelectionMixin', () => {
 
   it('should set selected to undefined by default', () => {
     expect(element.selected).to.be.equal(undefined);
+  });
+
+  it('should only add vaadin-tab components to items', () => {
+    expect(items.length).to.equal(3);
+    items.forEach(item => {
+      expect(item.tagName.toLowerCase()).to.equal('ssm-item');
+    });
   });
 
   it('should not select any item by default', () => {
