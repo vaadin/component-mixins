@@ -13,22 +13,32 @@ export const SlottedItemsMixin = <T extends Constructor<SlottedItemsClass>>(
 ): Constructor<SlottedItemsClass & SlottedItemsInterface> & T => {
   class SlottedItems extends base {
     @property({ attribute: false, hasChanged: () => true })
-    protected _items: HTMLElement[] = [];
-
-    get items(): HTMLElement[] {
+    public get items() {
       return this._items;
     }
+
+    public set items(value) {
+      if (this._slotChange) {
+        const oldValue = this._items;
+        this._items = value;
+        this._slotChange = false;
+        this.requestUpdate('items', oldValue);
+      }
+    }
+
+    private _items: HTMLElement[] = [];
+
+    private _slotChange = false;
 
     connectedCallback() {
       super.connectedCallback();
 
-      this._items = this._filterItems();
+      this._setItems();
     }
 
     protected update(props: PropertyValues) {
-      /* istanbul ignore else */
-      if (props.has('_items')) {
-        this._itemsChanged(this._items, (props.get('_items') || []) as HTMLElement[]);
+      if (props.has('items')) {
+        this._itemsChanged(this.items, (props.get('items') || []) as HTMLElement[]);
       }
 
       super.update(props);
@@ -41,7 +51,7 @@ export const SlottedItemsMixin = <T extends Constructor<SlottedItemsClass>>(
       /* istanbul ignore else */
       if (slot) {
         slot.addEventListener('slotchange', () => {
-          this._items = this._filterItems();
+          this._setItems();
         });
       }
     }
@@ -59,6 +69,11 @@ export const SlottedItemsMixin = <T extends Constructor<SlottedItemsClass>>(
 
     protected _filterItems() {
       return Array.from(this.children) as HTMLElement[];
+    }
+
+    private _setItems() {
+      this._slotChange = true;
+      this.items = this._filterItems();
     }
   }
 
