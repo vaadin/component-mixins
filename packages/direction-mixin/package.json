@@ -15,6 +15,7 @@
     "direction-*.js*"
   ],
   "dependencies": {
+    "@vaadin/mixin-utils": "^0.0.0",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
   },
