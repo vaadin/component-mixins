@@ -1,29 +1,10 @@
+import { Constructor, applyMixin, wasApplied } from '@vaadin/mixin-utils';
 import { DirectionClass } from './direction-class';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
-
-const appliedMixins = new Set();
-
-function getPrototypeChain<T>(obj: T) {
-  const chain = [];
-  let proto = obj;
-  while (proto) {
-    chain.push(proto);
-    proto = Object.getPrototypeOf(proto);
-  }
-  return chain;
-}
-
-function wasApplied(superClass: Constructor<HTMLElement>): boolean {
-  const classes = getPrototypeChain(superClass);
-  return classes.reduce((res: boolean, klass) => res || appliedMixins.has(klass), false);
-}
 
 export function DirectionMixin<T extends Constructor<DirectionClass>>(
   base: T
 ): Constructor<DirectionClass> & T {
-  if (wasApplied(base)) {
+  if (wasApplied(DirectionMixin, base)) {
     return base;
   }
 
@@ -33,7 +14,7 @@ export function DirectionMixin<T extends Constructor<DirectionClass>>(
     }
   }
 
-  appliedMixins.add(Direction);
+  applyMixin(DirectionMixin, Direction);
 
   return Direction;
 }
