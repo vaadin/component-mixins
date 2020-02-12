@@ -58,7 +58,7 @@ describe('SingleSelectionMixin', () => {
     expect(element.selected).to.be.equal(undefined);
   });
 
-  it('should only add vaadin-tab components to items', () => {
+  it('should only add selectable components to items', () => {
     expect(items.length).to.equal(3);
     items.forEach(item => {
       expect(item.tagName.toLowerCase()).to.equal('ssm-item');
