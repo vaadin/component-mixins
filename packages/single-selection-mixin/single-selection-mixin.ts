@@ -63,6 +63,10 @@ export const SingleSelectionMixin = <
       }
     }
 
+    protected _filterItems() {
+      return filterItems(Array.from(this.children));
+    }
+
     protected _onClick(event: MouseEvent) {
       this._setSelected(event);
     }
