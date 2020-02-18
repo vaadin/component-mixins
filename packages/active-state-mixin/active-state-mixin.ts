@@ -1,27 +1,23 @@
 import { PropertyValues } from 'lit-element';
 import { DisabledStateInterface } from '@vaadin/disabled-state-mixin';
+import { KeyboardMixin } from '@vaadin/keyboard-mixin/keyboard-mixin.js';
+import { KeyboardClass } from '@vaadin/keyboard-mixin/keyboard-class.js';
 import { ActiveStateClass } from './active-state-class';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T = object> = new (...args: any[]) => T;
 
-export const ActiveStateMixin = <T extends Constructor<DisabledStateInterface & ActiveStateClass>>(
+export const ActiveStateMixin = <
+  T extends Constructor<DisabledStateInterface & ActiveStateClass & KeyboardClass>
+>(
   base: T
 ): T & Constructor<ActiveStateClass> => {
-  class ActiveState extends base {
+  class ActiveState extends KeyboardMixin(base) {
     protected firstUpdated(props: PropertyValues) {
       super.firstUpdated(props);
 
       this.addEventListener('mousedown', (event: MouseEvent) => {
         this._onMouseDown(event);
-      });
-
-      this.addEventListener('keydown', (event: KeyboardEvent) => {
-        this._onKeyDown(event);
-      });
-
-      this.addEventListener('keyup', (event: KeyboardEvent) => {
-        this._onKeyUp(event);
       });
 
       this.addEventListener('touchstart', (event: TouchEvent) => {
@@ -44,13 +40,15 @@ export const ActiveStateMixin = <T extends Constructor<DisabledStateInterface & 
     }
 
     protected _onKeyDown(event: KeyboardEvent) {
+      super._onKeyDown && super._onKeyDown(event);
       if (/^( |SpaceBar|Enter)$/.test(event.key) && !this.disabled && !event.defaultPrevented) {
         event.preventDefault();
         this._setActive(true);
       }
     }
 
-    protected _onKeyUp(_event: KeyboardEvent) {
+    protected _onKeyUp(event: KeyboardEvent) {
+      super._onKeyUp && super._onKeyUp(event);
       this._setActive(false);
     }
 
