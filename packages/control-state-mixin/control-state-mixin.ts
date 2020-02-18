@@ -2,6 +2,8 @@ import { property, PropertyValues } from 'lit-element';
 import { DisabledStateInterface } from '@vaadin/disabled-state-mixin';
 import { FocusVisibleInterface } from '@vaadin/focus-visible-mixin';
 import { FocusVisibleClass } from '@vaadin/focus-visible-mixin/focus-visible-class';
+import { KeyboardMixin } from '@vaadin/keyboard-mixin/keyboard-mixin.js';
+import { KeyboardClass } from '@vaadin/keyboard-mixin/keyboard-class.js';
 
 export interface ControlStateInterface {
   tabIndex: number | null;
@@ -13,11 +15,13 @@ export interface ControlStateInterface {
 type Constructor<T = object> = new (...args: any[]) => T;
 
 export const ControlStateMixin = <
-  T extends Constructor<DisabledStateInterface & FocusVisibleInterface & FocusVisibleClass>
+  T extends Constructor<
+    DisabledStateInterface & FocusVisibleInterface & KeyboardClass & FocusVisibleClass
+  >
 >(
   base: T
 ): Constructor<ControlStateInterface> & T => {
-  class VaadinControlStateMixin extends base implements ControlStateInterface {
+  class ControlState extends KeyboardMixin(base) {
     @property({
       reflect: true,
       converter: {
@@ -50,22 +54,6 @@ export const ControlStateMixin = <
       }
     }
     /* eslint-enable @typescript-eslint/no-explicit-any */
-
-    protected firstUpdated(props: PropertyValues) {
-      super.firstUpdated(props);
-      this.addEventListener('keydown', e => {
-        if (!e.defaultPrevented && e.shiftKey && e.keyCode === 9) {
-          // Flag is checked in _focus event handler.
-          this._isShiftTabbing = true;
-          HTMLElement.prototype.focus.apply(this);
-          this._setFocused(false);
-          // Event handling in IE is asynchronous and the flag is removed asynchronously as well
-          setTimeout(() => {
-            this._isShiftTabbing = false;
-          }, 0);
-        }
-      });
-    }
 
     protected update(props: PropertyValues) {
       if (props.has('disabled')) {
@@ -132,6 +120,20 @@ export const ControlStateMixin = <
       }
     }
 
+    protected _onKeyDown(event: KeyboardEvent) {
+      super._onKeyDown && super._onKeyDown(event);
+      if (!event.defaultPrevented && event.shiftKey && event.keyCode === 9) {
+        // Flag is checked in _focus event handler.
+        this._isShiftTabbing = true;
+        HTMLElement.prototype.focus.apply(this);
+        this._setFocused(false);
+        // Event handling in IE is asynchronous and the flag is removed asynchronously as well
+        setTimeout(() => {
+          this._isShiftTabbing = false;
+        }, 0);
+      }
+    }
+
     protected _setFocused(focused: boolean) {
       if (super._setFocused) {
         super._setFocused(focused);
@@ -178,5 +180,5 @@ export const ControlStateMixin = <
     }
   }
 
-  return VaadinControlStateMixin;
+  return ControlState;
 };
