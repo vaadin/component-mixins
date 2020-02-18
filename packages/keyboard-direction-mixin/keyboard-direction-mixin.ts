@@ -1,7 +1,8 @@
-import { PropertyValues } from 'lit-element';
 import { SlottedItemsInterface } from '@vaadin/slotted-items-mixin';
 import { DirectionMixin } from '@vaadin/direction-mixin/direction-mixin.js';
 import { DirectionClass } from '@vaadin/direction-mixin/direction-class.js';
+import { KeyboardMixin } from '@vaadin/keyboard-mixin/keyboard-mixin.js';
+import { KeyboardClass } from '@vaadin/keyboard-mixin/keyboard-class.js';
 import { KeyboardDirectionClass } from './keyboard-direction-class';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,11 +50,13 @@ export const getAvailableIndex = (
 };
 
 export const KeyboardDirectionMixin = <
-  T extends Constructor<SlottedItemsInterface & KeyboardDirectionClass & DirectionClass>
+  T extends Constructor<
+    SlottedItemsInterface & KeyboardDirectionClass & KeyboardClass & DirectionClass
+  >
 >(
   base: T
-): Constructor<DirectionClass & KeyboardDirectionClass & KeyboardDirectionInterface> & T => {
-  const Base = DirectionMixin(base);
+): Constructor<KeyboardDirectionInterface> & T => {
+  const Base = KeyboardMixin(DirectionMixin(base));
 
   class KeyboardDirection extends Base {
     focus() {
@@ -69,15 +72,8 @@ export const KeyboardDirectionMixin = <
       return root ? (root.activeElement as HTMLElement) : null;
     }
 
-    protected firstUpdated(props: PropertyValues) {
-      super.firstUpdated(props);
-
-      this.addEventListener('keydown', (event: KeyboardEvent) => {
-        this._onKeyDown(event);
-      });
-    }
-
     protected _onKeyDown(event: KeyboardEvent) {
+      super._onKeyDown && super._onKeyDown(event);
       if (event.metaKey || event.ctrlKey) {
         return;
       }
