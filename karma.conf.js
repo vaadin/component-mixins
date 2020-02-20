@@ -8,11 +8,11 @@ const SL_LAUNCHERS = {
     platform: 'macOS 10.13',
     version: 'latest'
   },
-  'sl-edge-18': {
+  'sl-ios-13': {
     base: 'SauceLabs',
-    browserName: 'microsoftedge',
-    platform: 'Windows 10',
-    version: '18'
+    browserName: 'iphone',
+    platform: 'iPhone X Simulator',
+    version: '13.0'
   }
 };
 
@@ -98,7 +98,7 @@ module.exports = config => {
       babel: true,
       nodeResolve: true,
       fileExtensions: ['.ts'],
-      compatibility: 'esm',
+      compatibility: 'none',
       babelModernExclude: [
         '**/node_modules/sinon/**/*',
         '**/node_modules/mocha/**/*',
