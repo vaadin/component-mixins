@@ -1,12 +1,11 @@
 // See https://stackoverflow.com/a/58064481
-export const isIOS =
+const isIOS =
   /iPad|iPhone|iPod/.test(navigator.platform) ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
 let observed = false;
 
-/* istanbul ignore next */
-export const detectIosNavbar = () => {
+const detectIosNavbar = () => {
   const prop = '--vaadin-viewport-offset-bottom';
   const doc = document.documentElement;
 
@@ -20,7 +19,6 @@ export const detectIosNavbar = () => {
   }
 };
 
-/* istanbul ignore next */
 export const observeIosNavbar = () => {
   if (isIOS && !observed) {
     observed = true;
