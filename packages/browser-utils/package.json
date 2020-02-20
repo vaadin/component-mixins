@@ -1,0 +1,20 @@
+{
+  "name": "@vaadin/browser-utils",
+  "version": "0.0.0",
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaadin/component-mixins.git",
+    "directory": "packages/browser-utils"
+  },
+  "main": "browser-utils.js",
+  "module": "browser-utils.js",
+  "files": [
+    "browser-*.d.ts*",
+    "browser-*.js*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
