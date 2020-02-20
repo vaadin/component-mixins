@@ -25,10 +25,10 @@
     "@types/sinon": "^7.5.1",
     "@types/sinon-chai": "3.2.3",
     "chai": "^4.2.0",
-    "cross-env": "^6.0.3",
+    "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "eslint-config-vaadin": "^0.3.3",
-    "husky": "^4.0.9",
+    "husky": "^4.2.3",
     "karma": "^4.4.1",
     "karma-chrome-launcher": "^3.1.0",
     "karma-coverage-istanbul-reporter": "^2.1.1",
@@ -39,7 +39,7 @@
     "karma-sinon-chai": "^2.0.2",
     "karma-source-map-support": "^1.4.0",
     "lerna": "^3.20.2",
-    "lint-staged": "^9.5.0",
+    "lint-staged": "^10.0.7",
     "mocha": "^7.0.1",
     "prettier": "^1.19.1",
     "sinon": "^8.0.4",
@@ -56,8 +56,7 @@
   "lint-staged": {
     "*.ts": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "workspaces": [
