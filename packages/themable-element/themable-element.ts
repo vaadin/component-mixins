@@ -1,6 +1,6 @@
 import { DomModule } from '@polymer/polymer/lib/elements/dom-module.js';
 import { cssFromModule } from '@polymer/polymer/lib/utils/style-gather.js';
-import { LitElement, unsafeCSS } from 'lit-element';
+import { LitElement, unsafeCSS, CSSResult, CSSResultArray } from 'lit-element';
 
 const sortModules = (modules: Array<{ [s: string]: DomModule }>) => {
   return Object.keys(modules).sort((moduleNameA, moduleNameB) => {
@@ -31,8 +31,9 @@ const sortModules = (modules: Array<{ [s: string]: DomModule }>) => {
 export class ThemableElement extends LitElement {
   protected static is: string;
 
-  static finalize() {
-    super.finalize();
+  static getStyles(): CSSResult | CSSResultArray | undefined {
+    const styles = super.getStyles();
+    const themes: CSSResultArray = styles ? [styles] : [];
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { modules } = DomModule.prototype as any;
@@ -42,16 +43,12 @@ export class ThemableElement extends LitElement {
       if (themeFor) {
         themeFor.split(' ').forEach((themeForToken: string) => {
           if (new RegExp(`^${themeForToken.split('*').join('.*')}$`).test(this.is)) {
-            this._includeStyle(moduleName);
+            themes.push(unsafeCSS(cssFromModule(moduleName)));
           }
         });
       }
     });
-  }
 
-  static _includeStyle(moduleName: string) {
-    // Hack to bypass TypeScript private property check
-    // eslint-disable-next-line dot-notation
-    this['_styles'].push(unsafeCSS(cssFromModule(moduleName)));
+    return themes;
   }
 }
