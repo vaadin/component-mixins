@@ -1,4 +1,5 @@
 import { property, PropertyValues } from 'lit-element';
+import { Constructor } from '@vaadin/mixin-utils';
 import { FocusVisibleClass } from './focus-visible-class';
 
 // We consider the keyboard to be active if the window has received a keydown
@@ -22,9 +23,6 @@ window.addEventListener(
   },
   { capture: true }
 );
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
 
 export interface FocusVisibleInterface {
   autofocus: boolean;

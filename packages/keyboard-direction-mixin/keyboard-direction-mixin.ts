@@ -1,12 +1,10 @@
+import { Constructor } from '@vaadin/mixin-utils';
 import { SlottedItemsInterface } from '@vaadin/slotted-items-mixin';
 import { DirectionMixin } from '@vaadin/direction-mixin/direction-mixin.js';
 import { DirectionClass } from '@vaadin/direction-mixin/direction-class.js';
 import { KeyboardMixin } from '@vaadin/keyboard-mixin/keyboard-mixin.js';
 import { KeyboardClass } from '@vaadin/keyboard-mixin/keyboard-class.js';
 import { KeyboardDirectionClass } from './keyboard-direction-class';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
 
 export interface KeyboardDirectionInterface {
   focused: Element | null;

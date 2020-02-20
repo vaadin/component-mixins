@@ -1,3 +1,4 @@
+import { Constructor } from '@vaadin/mixin-utils';
 import {
   KeyboardDirectionInterface,
   getAvailableIndex,
@@ -7,9 +8,6 @@ import { KeyboardDirectionClass } from '@vaadin/keyboard-direction-mixin/keyboar
 import { SlottedItemsInterface } from '@vaadin/slotted-items-mixin';
 import { SlottedItemsClass } from '@vaadin/slotted-items-mixin/slotted-items-class';
 import { RovingTabIndexClass } from './roving-tabindex-class';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
 
 export const RovingTabIndexMixin = <
   T extends Constructor<

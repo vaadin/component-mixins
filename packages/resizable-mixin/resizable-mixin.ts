@@ -1,9 +1,7 @@
 import { LitElement } from 'lit-element';
+import { Constructor } from '@vaadin/mixin-utils';
 import getResizeObserver from './resize-observer-polyfill';
 import { ResizableClass } from './resizable-class';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
 
 export const ResizableMixin = <T extends Constructor<LitElement>>(
   base: T

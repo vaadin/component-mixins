@@ -1,9 +1,7 @@
 import { property, PropertyValues } from 'lit-element';
+import { Constructor } from '@vaadin/mixin-utils';
 import { DisabledStateInterface } from '@vaadin/disabled-state-mixin';
 import { SelectedStateClass } from './selected-state-class';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
 
 export interface SelectedStateInterface {
   selected: boolean;

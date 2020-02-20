@@ -1,4 +1,5 @@
 import { PropertyValues } from 'lit-element';
+import { Constructor } from '@vaadin/mixin-utils';
 import { DirectionClass } from '@vaadin/direction-mixin/direction-class';
 import { KeyboardDirectionInterface } from '@vaadin/keyboard-direction-mixin';
 import { KeyboardDirectionClass } from '@vaadin/keyboard-direction-mixin/keyboard-direction-class';
@@ -7,9 +8,6 @@ import { SlottedItemsClass } from '@vaadin/slotted-items-mixin/slotted-items-cla
 import { SingleSelectionInterface } from '@vaadin/single-selection-mixin';
 import { SingleSelectionClass } from '@vaadin/single-selection-mixin/single-selection-class';
 import { SelectionInViewClass } from './selection-in-view-class';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
 
 export const SelectionInViewMixin = <
   T extends Constructor<

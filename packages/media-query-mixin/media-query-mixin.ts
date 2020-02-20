@@ -1,5 +1,6 @@
 import { LitElement, property } from 'lit-element';
 import { PropertyDeclaration } from 'lit-element/lib/updating-element.js';
+import { Constructor } from '@vaadin/mixin-utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function mediaProperty(opts?: MediaDeclaration): (proto: object, name?: PropertyKey) => any {
@@ -9,9 +10,6 @@ export function mediaProperty(opts?: MediaDeclaration): (proto: object, name?: P
 export interface MediaDeclaration {
   readonly media?: string;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
 
 export const MediaQueryMixin = <T extends Constructor<LitElement>>(
   base: T

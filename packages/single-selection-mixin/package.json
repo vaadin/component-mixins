@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "@vaadin/disabled-state-mixin": "^0.1.0",
+    "@vaadin/mixin-utils": "^0.0.0",
     "@vaadin/selected-state-mixin": "^0.1.1",
     "@vaadin/slotted-items-mixin": "^0.1.3",
     "lit-element": "^2.0.0",

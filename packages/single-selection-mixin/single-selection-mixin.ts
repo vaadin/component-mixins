@@ -1,13 +1,11 @@
 import { property, PropertyValues } from 'lit-element';
+import { Constructor } from '@vaadin/mixin-utils';
 import { DisabledStateInterface } from '@vaadin/disabled-state-mixin';
 import { SelectedStateClass } from '@vaadin/selected-state-mixin/selected-state-class';
 import { SelectedStateInterface } from '@vaadin/selected-state-mixin';
 import { SlottedItemsInterface } from '@vaadin/slotted-items-mixin';
 import { SlottedItemsClass } from '@vaadin/slotted-items-mixin/slotted-items-class';
 import { SingleSelectionClass } from './single-selection-class';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
 
 export interface SingleSelectionInterface {
   selected: number | null | undefined;

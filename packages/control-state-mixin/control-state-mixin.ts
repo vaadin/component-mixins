@@ -1,4 +1,5 @@
 import { property, PropertyValues } from 'lit-element';
+import { Constructor } from '@vaadin/mixin-utils';
 import { DisabledStateInterface } from '@vaadin/disabled-state-mixin';
 import { FocusVisibleInterface } from '@vaadin/focus-visible-mixin';
 import { FocusVisibleClass } from '@vaadin/focus-visible-mixin/focus-visible-class';
@@ -10,9 +11,6 @@ export interface ControlStateInterface {
   focus(): void;
   blur(): void;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = object> = new (...args: any[]) => T;
 
 export const ControlStateMixin = <
   T extends Constructor<
