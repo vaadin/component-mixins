@@ -1,5 +1,5 @@
 import { fixture } from '@open-wc/testing-helpers';
-import * as Vaadin from '@vaadin/vaadin-themable-mixin/register-styles.js';
+import { registerStyles } from '@vaadin/vaadin-themable-mixin/register-styles.js';
 import { html, css } from 'lit-element';
 import { ThemableElement } from '../themable-element';
 
@@ -10,63 +10,63 @@ const bar = 'lit-bar';
 const baz = 'lit-baz';
 const override = 'lit-override';
 
-Vaadin.registerStyles(
+registerStyles(
   foo,
-  Vaadin.css`
+  css`
     :host {
       display: flex;
     }
 
-    [part="text"] {
+    [part='text'] {
       color: rgb(255, 255, 255);
     }
   `
 );
 
-Vaadin.registerStyles(
+registerStyles(
   `${foo} ${bar}`,
-  Vaadin.css`
-    [part="text"] {
+  css`
+    [part='text'] {
       background-color: rgb(255, 0, 0);
     }
   `
 );
 
-Vaadin.registerStyles(
+registerStyles(
   baz,
-  Vaadin.css`
-    [part="text"] {
+  css`
+    [part='text'] {
       width: 100px;
     }
   `
 );
 
-Vaadin.registerStyles(
+registerStyles(
   'lit-*a*',
-  Vaadin.css`
-    [part="text"] {
+  css`
+    [part='text'] {
       position: relative;
     }
   `
 );
 
-Vaadin.registerStyles(
+registerStyles(
   override,
-  Vaadin.css`
+  css`
     :host {
       position: absolute;
     }
 
-    [part="text"] {
+    [part='text'] {
       color: rgb(0, 0, 0);
     }
   `,
   { moduleId: 'custom-override-styles-first' }
 );
 
-Vaadin.registerStyles(
+registerStyles(
   override,
-  Vaadin.css`
+  css`
     :host {
       position: relative;
     }
@@ -74,9 +74,9 @@ Vaadin.registerStyles(
   { moduleId: 'custom-override-styles-second' }
 );
 
-Vaadin.registerStyles(
+registerStyles(
   override,
-  Vaadin.css`
+  css`
     :host {
       display: flex;
     }
@@ -84,14 +84,14 @@ Vaadin.registerStyles(
   { moduleId: 'vaadin-override-styles-first' }
 );
 
-Vaadin.registerStyles(
+registerStyles(
   override,
-  Vaadin.css`
+  css`
     :host {
       display: block;
     }
 
-    [part="text"] {
+    [part='text'] {
       color: rgb(255, 255, 255);
       opacity: 1;
       display: block;
@@ -100,10 +100,10 @@ Vaadin.registerStyles(
   { moduleId: 'vaadin-override-styles-second' }
 );
 
-Vaadin.registerStyles(
+registerStyles(
   override,
-  Vaadin.css`
-    [part="text"] {
+  css`
+    [part='text'] {
       color: rgb(255, 0, 0);
       display: inline;
     }
@@ -111,10 +111,10 @@ Vaadin.registerStyles(
   { moduleId: 'lumo-override-styles' }
 );
 
-Vaadin.registerStyles(
+registerStyles(
   override,
-  Vaadin.css`
-    [part="text"] {
+  css`
+    [part='text'] {
       color: rgb(0, 255, 0);
       opacity: 0.5;
     }
@@ -171,7 +171,7 @@ class LitOverride extends ThemableElement {
 customElements.define(override, LitOverride);
 
 describe('ThemableElement', () => {
-  let wrapper;
+  let wrapper: HTMLElement;
   let components: Array<Element> = [];
 
   const getPart = (idx: number) => {
@@ -210,8 +210,8 @@ describe('ThemableElement', () => {
     expect(window.getComputedStyle(getPart(1)).backgroundColor).to.equal('rgb(255, 0, 0)');
   });
 
-  it('should inject to subclassed components', () => {
-    expect(window.getComputedStyle(getPart(2)).backgroundColor).to.equal('rgb(255, 0, 0)');
+  it('should not inject to subclassed components', () => {
+    expect(window.getComputedStyle(getPart(2)).backgroundColor).to.not.equal('rgb(255, 0, 0)');
   });
 
   it('should inject to wildcard styles', () => {
