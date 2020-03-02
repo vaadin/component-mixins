@@ -1,6 +1,6 @@
 {
   "name": "@vaadin/direction-mixin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "repository": {
@@ -15,7 +15,7 @@
     "direction-*.js*"
   ],
   "dependencies": {
-    "@vaadin/mixin-utils": "^0.0.0",
+    "@vaadin/mixin-utils": "^0.1.0",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
   },
