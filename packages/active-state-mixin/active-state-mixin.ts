@@ -9,7 +9,7 @@ export const ActiveStateMixin = <
   T extends Constructor<DisabledStateInterface & ActiveStateClass & KeyboardClass>
 >(
   base: T
-): T & Constructor<ActiveStateClass> => {
+): T & Constructor<ActiveStateClass & KeyboardClass> => {
   class ActiveState extends KeyboardMixin(base) {
     protected firstUpdated(props: PropertyValues) {
       super.firstUpdated(props);
