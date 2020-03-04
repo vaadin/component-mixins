@@ -1,5 +1,5 @@
 import { LitElement } from 'lit-element';
 
 export abstract class CheckedStateClass extends LitElement {
-  protected _checkedChanged?(checked: boolean): void;
+  protected _setAriaChecked?(checked: boolean): void;
 }
