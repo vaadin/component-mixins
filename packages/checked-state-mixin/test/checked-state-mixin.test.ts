@@ -3,6 +3,7 @@ import { fixture } from '@open-wc/testing-helpers';
 import { CheckedStateMixin } from '../checked-state-mixin';
 
 const { expect } = chai;
+const { sinon } = window;
 
 @customElement('chm-element')
 class ChmElement extends CheckedStateMixin(LitElement) {
@@ -44,5 +45,15 @@ describe('CheckedStateMixin', () => {
     element.checked = false;
     await element.updateComplete;
     expect(element.getAttribute('aria-checked')).to.be.equal('false');
+  });
+
+  it('should fire `checked-changed` event on checked change', async () => {
+    const spy = sinon.spy();
+    element.addEventListener('checked-changed', spy);
+    element.checked = true;
+    await element.updateComplete;
+    expect(spy).to.be.calledOnce;
+    expect(spy.firstCall.args[0]).to.be.instanceOf(CustomEvent);
+    expect(spy.firstCall.args[0].detail.value).to.deep.equal(element.checked);
   });
 });

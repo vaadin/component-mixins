@@ -25,6 +25,14 @@ export const CheckedStateMixin = <T extends Constructor<CheckedStateClass>>(
 
     protected _checkedChanged(checked: boolean) {
       this.setAttribute('aria-checked', checked ? 'true' : 'false');
+
+      this.dispatchEvent(
+        new CustomEvent('checked-changed', {
+          detail: {
+            value: checked
+          }
+        })
+      );
     }
   }
 
