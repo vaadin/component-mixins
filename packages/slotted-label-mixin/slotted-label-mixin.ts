@@ -9,8 +9,8 @@ export const SlottedLabelMixin = <T extends Constructor<LitElement>>(base: T): T
     protected firstUpdated(props: PropertyValues) {
       super.firstUpdated(props);
 
-      const slot = this.renderRoot.querySelector('[part~="label"] slot');
-      if (slot instanceof HTMLSlotElement) {
+      const slot = this.renderRoot.querySelector('[part~="label"] slot') as HTMLSlotElement;
+      if (slot) {
         slot.addEventListener('slotchange', () => this._updateLabelState(slot));
         this._updateLabelState(slot);
       }
