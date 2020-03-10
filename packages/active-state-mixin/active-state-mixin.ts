@@ -58,12 +58,16 @@ export const ActiveStateMixin = <
 
       this._setActive(true);
 
-      const upListener = () => {
-        this._setActive(false);
+      const upListener = (e: MouseEvent) => {
+        this._onMouseUp(e);
         document.removeEventListener('mouseup', upListener);
       };
 
       document.addEventListener('mouseup', upListener);
+    }
+
+    protected _onMouseUp(_event: MouseEvent) {
+      this._setActive(false);
     }
 
     protected _onTouchStart(_event: TouchEvent) {
