@@ -27,7 +27,7 @@
     "chai": "^4.2.0",
     "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
-    "eslint-config-vaadin": "^0.3.4",
+    "eslint-config-vaadin": "^0.3.5",
     "husky": "^4.2.3",
     "karma": "^4.4.1",
     "karma-chrome-launcher": "^3.1.0",
