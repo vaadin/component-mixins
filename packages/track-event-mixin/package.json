@@ -1,0 +1,29 @@
+{
+  "name": "@vaadin/track-event-mixin",
+  "version": "0.0.0",
+  "author": "Vaadin Ltd",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaadin/component-mixins.git",
+    "directory": "packages/track-event-mixin"
+  },
+  "main": "track-event-mixin.js",
+  "module": "track-event-mixin.js",
+  "files": [
+    "track-event-*.d.ts*",
+    "track-event-*.js*"
+  ],
+  "dependencies": {
+    "@vaadin/browser-utils": "^0.1.0",
+    "@vaadin/mixin-utils": "^0.1.0",
+    "lit-element": "^2.0.0",
+    "lit-html": "^1.0.0"
+  },
+  "devDependencies": {
+    "@open-wc/testing-helpers": "^1.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
