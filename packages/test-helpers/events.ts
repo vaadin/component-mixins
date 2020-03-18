@@ -111,11 +111,11 @@ export function focusout(node: Element) {
 }
 
 export function mousedown(node: Element, buttons = 1) {
-  const event = new MouseEvent('mousedown', { bubbles: true, buttons });
+  const event = new MouseEvent('mousedown', { bubbles: true, composed: true, buttons });
   node.dispatchEvent(event);
 }
 
 export function mouseup(node: Element) {
-  const event = new MouseEvent('mouseup', { bubbles: true });
+  const event = new MouseEvent('mouseup', { bubbles: true, composed: true });
   node.dispatchEvent(event);
 }
