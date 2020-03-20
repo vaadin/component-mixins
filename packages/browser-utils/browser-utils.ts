@@ -1,5 +1,5 @@
 // See https://stackoverflow.com/a/58064481
-const isIOS =
+export const isIOS =
   /iPad|iPhone|iPod/.test(navigator.platform) ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
