@@ -1,32 +1,17 @@
-import { PropertyValues } from 'lit-element';
 import { Constructor } from '@vaadin/mixin-utils';
 import { DisabledStateInterface } from '@vaadin/disabled-state-mixin';
+import { DownUpMixin } from '@vaadin/down-up-mixin/down-up-mixin.js';
+import { DownUpClass } from '@vaadin/down-up-mixin/down-up-class.js';
 import { KeyboardMixin } from '@vaadin/keyboard-mixin/keyboard-mixin.js';
 import { KeyboardClass } from '@vaadin/keyboard-mixin/keyboard-class.js';
 import { ActiveStateClass } from './active-state-class';
 
 export const ActiveStateMixin = <
-  T extends Constructor<DisabledStateInterface & ActiveStateClass & KeyboardClass>
+  T extends Constructor<DisabledStateInterface & ActiveStateClass & KeyboardClass & DownUpClass>
 >(
   base: T
-): T & Constructor<ActiveStateClass & KeyboardClass> => {
-  class ActiveState extends KeyboardMixin(base) {
-    protected firstUpdated(props: PropertyValues) {
-      super.firstUpdated(props);
-
-      this.addEventListener('mousedown', (event: MouseEvent) => {
-        this._onMouseDown(event);
-      });
-
-      this.addEventListener('touchstart', (event: TouchEvent) => {
-        this._onTouchStart(event);
-      });
-
-      this.addEventListener('touchend', (event: TouchEvent) => {
-        this._onTouchEnd(event);
-      });
-    }
-
+): T & Constructor<ActiveStateClass & KeyboardClass & DownUpClass> => {
+  class ActiveState extends KeyboardMixin(DownUpMixin(base)) {
     disconnectedCallback() {
       super.disconnectedCallback();
 
@@ -50,33 +35,18 @@ export const ActiveStateMixin = <
       this._setActive(false);
     }
 
-    protected _onMouseDown(event: MouseEvent) {
-      // Only process events for the left button.
-      if (event.buttons !== 1 || this.disabled) {
+    protected _onDown() {
+      super._onDown && super._onDown();
+
+      if (this.disabled) {
         return;
       }
 
       this._setActive(true);
-
-      const upListener = (e: MouseEvent) => {
-        this._onMouseUp(e);
-        document.removeEventListener('mouseup', upListener);
-      };
-
-      document.addEventListener('mouseup', upListener);
     }
 
-    protected _onMouseUp(_event: MouseEvent) {
-      this._setActive(false);
-    }
-
-    protected _onTouchStart(_event: TouchEvent) {
-      if (!this.disabled) {
-        this._setActive(true);
-      }
-    }
-
-    protected _onTouchEnd(_event: TouchEvent) {
+    protected _onUp() {
+      super._onUp && super._onUp();
       this._setActive(false);
     }
 
