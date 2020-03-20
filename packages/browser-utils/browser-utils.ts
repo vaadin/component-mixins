@@ -19,8 +19,8 @@ const detectIosNavbar = () => {
   }
 };
 
-export const observeIosNavbar = () => {
-  if (isIOS && !observed) {
+export const observeIosNavbar = (force?: boolean) => {
+  if ((force || isIOS) && !observed) {
     observed = true;
     detectIosNavbar();
     window.addEventListener('resize', detectIosNavbar);

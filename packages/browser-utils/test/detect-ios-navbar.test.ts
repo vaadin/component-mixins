@@ -1,4 +1,3 @@
-import { restoreNavigator } from './mock-ios';
 import { observeIosNavbar } from '../browser-utils';
 
 const { expect } = chai;
@@ -16,14 +15,10 @@ describe('iOS navbar', () => {
     sandbox.restore();
   });
 
-  after(() => {
-    restoreNavigator();
-  });
-
   it('should set --vaadin-viewport-bottom when landscape and clientHeight > innerHeight', () => {
     sandbox.stub(document.documentElement, 'clientHeight').value(250);
     sandbox.stub(window, 'innerHeight').value(200);
-    observeIosNavbar();
+    observeIosNavbar(true);
     expect(
       getComputedStyle(document.documentElement).getPropertyValue('--vaadin-viewport-offset-bottom')
     ).to.equal('50px');
@@ -50,7 +45,7 @@ describe('iOS navbar', () => {
 
   it('should not register another resize event listener when called twice', () => {
     const spy = sinon.spy(window, 'addEventListener');
-    observeIosNavbar();
+    observeIosNavbar(true);
     expect(spy).to.not.be.called;
   });
 });
