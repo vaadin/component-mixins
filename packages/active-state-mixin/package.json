@@ -1,6 +1,6 @@
 {
   "name": "@vaadin/active-state-mixin",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "repository": {
@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "@vaadin/disabled-state-mixin": "^0.1.1",
-    "@vaadin/down-up-mixin": "^0.0.0",
+    "@vaadin/down-up-mixin": "^0.1.0",
     "@vaadin/keyboard-mixin": "^0.1.1",
     "@vaadin/mixin-utils": "^0.1.0",
     "lit-element": "^2.0.0",
