@@ -7,7 +7,10 @@ import { SlottedItemsInterface } from '@vaadin/slotted-items-mixin';
 import { SlottedItemsClass } from '@vaadin/slotted-items-mixin/slotted-items-class';
 import { SingleSelectionInterface } from '@vaadin/single-selection-mixin';
 import { SingleSelectionClass } from '@vaadin/single-selection-mixin/single-selection-class';
+import { DirHelper } from '@vaadin/vaadin-element-mixin/vaadin-dir-helper.js';
 import { SelectionInViewClass } from './selection-in-view-class';
+
+const scrollType = DirHelper.detectScrollType();
 
 export const SelectionInViewMixin = <
   T extends Constructor<
@@ -45,26 +48,55 @@ export const SelectionInViewMixin = <
       this._scrollToItem(item);
     }
 
+    protected get _normalizedScrollLeft() {
+      return DirHelper.getNormalizedScrollLeft(
+        scrollType,
+        this.getAttribute('dir') || 'ltr',
+        this._scrollTarget
+      );
+    }
+
     protected _scroll(distance: number) {
-      const prop = this._vertical ? 'scrollTop' : 'scrollLeft';
-      this._scrollTarget[prop] += distance;
+      if (this._vertical) {
+        this._scrollTarget.scrollTop += distance;
+      } else {
+        DirHelper.setNormalizedScrollLeft(
+          scrollType,
+          this.getAttribute('dir') || 'ltr',
+          this._scrollTarget,
+          this._normalizedScrollLeft + distance
+        );
+      }
     }
 
     protected _scrollToItem(item: HTMLElement) {
       const idx = this.items.indexOf(item);
 
       let distance = 0;
-      const props: Array<'top' | 'bottom' | 'left' | 'right'> = this._vertical
-        ? ['top', 'bottom']
-        : ['left', 'right'];
-      const scrollerRect = this._scrollTarget.getBoundingClientRect();
+
+      const { top, bottom, left, right } = this._scrollTarget.getBoundingClientRect();
       const nextItemRect = (this.items[idx + 1] || item).getBoundingClientRect();
       const prevItemRect = (this.items[idx - 1] || item).getBoundingClientRect();
 
-      if (nextItemRect[props[1]] >= scrollerRect[props[1]]) {
-        distance = nextItemRect[props[1]] - scrollerRect[props[1]];
-      } else if (prevItemRect[props[0]] <= scrollerRect[props[0]]) {
-        distance = prevItemRect[props[0]] - scrollerRect[props[0]];
+      if (this._vertical) {
+        if (nextItemRect.bottom > bottom) {
+          distance = nextItemRect.bottom - bottom;
+        } else if (prevItemRect.top < top) {
+          distance = prevItemRect.top - top;
+        }
+      } else if (this.getAttribute('dir') === 'rtl') {
+        if (nextItemRect.left < left) {
+          distance = nextItemRect.left - left;
+        } else if (prevItemRect.right > right) {
+          distance = prevItemRect.right - right;
+        }
+      } else {
+        // eslint-disable-next-line no-lonely-if
+        if (nextItemRect.right > right) {
+          distance = nextItemRect.right - right;
+        } else if (prevItemRect.left < left) {
+          distance = prevItemRect.left - left;
+        }
       }
 
       this._scroll(distance);

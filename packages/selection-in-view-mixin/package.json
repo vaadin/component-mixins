@@ -20,6 +20,7 @@
     "@vaadin/mixin-utils": "^0.1.0",
     "@vaadin/single-selection-mixin": "^0.1.6",
     "@vaadin/slotted-items-mixin": "^0.1.5",
+    "@vaadin/vaadin-element-mixin": "^2.3.2",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
   },
