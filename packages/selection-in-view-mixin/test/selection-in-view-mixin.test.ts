@@ -103,47 +103,77 @@ describe('SelectionInViewMixin', () => {
   });
 
   describe('horizontal', () => {
-    it('should scroll forward when selecting next item', async () => {
-      expect(element.scroller.scrollLeft).to.be.equal(0);
-      enterKeyDown(items[1]);
-      enterKeyUp(items[1]);
-      await element.updateComplete;
-      expect(element.scroller.scrollLeft).to.be.greaterThan(0);
+    describe('default mode', () => {
+      it('should scroll forward when selecting next item', async () => {
+        expect(element.scroller.scrollLeft).to.be.equal(0);
+        enterKeyDown(items[1]);
+        enterKeyUp(items[1]);
+        await element.updateComplete;
+        expect(element.scroller.scrollLeft).to.be.greaterThan(0);
+      });
+
+      it('should scroll back when selecting previous item', async () => {
+        element.selected = 2;
+        await element.updateComplete;
+        expect(element.scroller.scrollLeft).to.be.greaterThan(0);
+        enterKeyDown(items[0]);
+        enterKeyUp(items[0]);
+        await element.updateComplete;
+        expect(element.scroller.scrollLeft).to.be.equal(0);
+      });
+
+      it('should scroll forward when focusing next item', async () => {
+        items[0].focus();
+        arrowRightKeyDown(items[0]);
+        await element.updateComplete;
+        expect(element.scroller.scrollLeft).to.be.greaterThan(0);
+      });
+
+      it('should scroll back when focusing previous item', async () => {
+        element.selected = 1;
+        await element.updateComplete;
+        expect(element.scroller.scrollLeft).to.be.greaterThan(0);
+        items[1].focus();
+        arrowLeftKeyDown(items[1]);
+        await element.updateComplete;
+        expect(element.scroller.scrollLeft).to.be.equal(0);
+      });
+
+      it('should not scroll to item when it is disabled', async () => {
+        items[2].disabled = true;
+        await items[2].updateComplete;
+        element.selected = 2;
+        await element.updateComplete;
+        expect(element.scroller.scrollLeft).to.be.equal(0);
+      });
     });
 
-    it('should scroll back when selecting previous item', async () => {
-      element.selected = 2;
-      await element.updateComplete;
-      expect(element.scroller.scrollLeft).to.be.greaterThan(0);
-      enterKeyDown(items[0]);
-      enterKeyUp(items[0]);
-      await element.updateComplete;
-      expect(element.scroller.scrollLeft).to.be.equal(0);
-    });
+    describe('RTL mode', () => {
+      beforeEach(() => {
+        element.setAttribute('dir', 'rtl');
+      });
 
-    it('should scroll forward when focusing next item', async () => {
-      items[0].focus();
-      arrowRightKeyDown(items[0]);
-      await element.updateComplete;
-      expect(element.scroller.scrollLeft).to.be.greaterThan(0);
-    });
+      it('should scroll when reaching left most visible item', async () => {
+        element.selected = 0;
+        await element.updateComplete;
+        items[0].focus();
+        arrowLeftKeyDown(items[0]);
+        await element.updateComplete;
+        const itemRectLeft = items[2].getBoundingClientRect().left;
+        const listRectLeft = element.getBoundingClientRect().left;
+        expect(listRectLeft).to.be.closeTo(itemRectLeft, 1);
+      });
 
-    it('should scroll back when focusing previous item', async () => {
-      element.selected = 1;
-      await element.updateComplete;
-      expect(element.scroller.scrollLeft).to.be.greaterThan(0);
-      items[1].focus();
-      arrowLeftKeyDown(items[1]);
-      await element.updateComplete;
-      expect(element.scroller.scrollLeft).to.be.equal(0);
-    });
-
-    it('should not scroll to item when it is disabled', async () => {
-      items[2].disabled = true;
-      await items[2].updateComplete;
-      element.selected = 2;
-      await element.updateComplete;
-      expect(element.scroller.scrollLeft).to.be.equal(0);
+      it('should scroll when reaching right most visible item', async () => {
+        element.selected = 2;
+        await element.updateComplete;
+        items[2].focus();
+        arrowRightKeyDown(items[2]);
+        await element.updateComplete;
+        const itemRectRight = items[0].getBoundingClientRect().right;
+        const listRectRight = element.getBoundingClientRect().right;
+        expect(listRectRight).to.be.closeTo(itemRectRight, 1);
+      });
     });
   });
 

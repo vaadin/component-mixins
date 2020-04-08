@@ -1990,9 +1990,9 @@
   integrity sha512-cTNZXR0zmOfSoFhPdE6YrGlFlNS2T0yOV44+OgZDL27sHFUdLvUaH5x6OgZSYbK48giorv97/ITC62MeSZKEwQ==
 
 "@polymer/polymer@^3.0.0", "@polymer/polymer@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@polymer/polymer/-/polymer-3.3.0.tgz#52a0665ac29654728e8f46e8ee178c02c49efdd0"
-  integrity sha512-rij7suomS7DxdBamnwr/Xa0V5hpypf7I9oYKseF2FWz5Xh2a3wJNpVjgJy1adXVCxqIyPhghsrthnfCt7EblsQ==
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@polymer/polymer/-/polymer-3.3.1.tgz#9ad48992d2a96775f80b0673f3a615d6df8a3dfc"
+  integrity sha512-8KaB48tzyMjdsHdxo5KvCAaqmTe7rYDzQAoj/pyEfq9Fp4YfUaS+/xqwYj0GbiDAUNzwkmEQ7dw9cgnRNdKO8A==
   dependencies:
     "@webcomponents/shadycss" "^1.9.1"
 
@@ -2172,10 +2172,10 @@
   resolved "https://registry.yarnpkg.com/@vaadin/vaadin-development-mode-detector/-/vaadin-development-mode-detector-2.0.4.tgz#f49c8009856bead92d248377c36b295b5aae78e5"
   integrity sha512-S+PaFrZpK8uBIOnIHxjntTrgumd5ztuCnZww96ydGKXgo9whXfZsbMwDuD/102a/IuPUMyF+dh/n3PbWzJ6igA==
 
-"@vaadin/vaadin-element-mixin@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-element-mixin/-/vaadin-element-mixin-2.3.0.tgz#535591e99cdc433a9c4e19d9861d280f6705ea5b"
-  integrity sha512-9gQb6Y3c/KlkJkITr+JncBZQ3iAjLpU/B6Ykeis+AHjPn6p+f4x3xsJ09IJKtb5YqD5wy9Zu7ANdM++97abQ2g==
+"@vaadin/vaadin-element-mixin@^2.3.0", "@vaadin/vaadin-element-mixin@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-element-mixin/-/vaadin-element-mixin-2.3.2.tgz#92f0e8687a554c37bb9e2420cc3f481f761e21e8"
+  integrity sha512-pYcVjkeqzNrzTTydkkYaSt7sNOpiReCx3wZYysQlVXt5+i/zR4ATttdTzRc0VJkycYG+y+UoIgGZE4o283of2w==
   dependencies:
     "@polymer/polymer" "^3.0.0"
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
@@ -2197,9 +2197,9 @@
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
 
 "@webcomponents/shadycss@^1.9.1":
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.9.2.tgz#6a3a65951b5a97279dd9b92cc277dd815d0e1fad"
-  integrity sha512-GsD7RpDVrVdgC6e+D8zQia8RGNmEGQ9/qotnVPQYPrIXhGS5xSt6ZED9YmuHz3HbLqY+E54tE1EK3tjLzSCGrw==
+  version "1.9.6"
+  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.9.6.tgz#a8c5db867e49200a05cf8d5008029c09b7861979"
+  integrity sha512-5fFjvP0jQJZoXK6YzYeYcIDGJ5oEsdjr1L9VaYLw5yxNd4aRz4srMpwCwldeNG0A6Hvr9igbG7fCsBeiiCXd7A==
 
 "@webcomponents/webcomponentsjs@^2.2.10":
   version "2.3.0"
