@@ -11,13 +11,12 @@
   "main": "themable-element.js",
   "module": "themable-element.js",
   "files": [
-    "custom_typings/",
     "themable-element.d.ts*",
     "themable-element.js*"
   ],
   "dependencies": {
-    "@polymer/polymer": "^3.3.0",
-    "@vaadin/vaadin-themable-mixin": "^1.5.2",
+    "@polymer/polymer": "^3.2.0",
+    "@vaadin/vaadin-themable-mixin": "^1.6.1",
     "lit-element": "^2.3.0",
     "lit-html": "^1.0.0"
   },

@@ -5,7 +5,6 @@
     "composite": true
   },
   "include": [
-    "themable-element.ts",
-    "custom_typings/*.d.ts"
+    "themable-element.ts"
   ]
 }

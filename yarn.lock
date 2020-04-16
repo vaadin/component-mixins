@@ -1749,7 +1749,7 @@
   resolved "https://registry.yarnpkg.com/@open-wc/testing-helpers/-/testing-helpers-1.2.3.tgz#c6c415f64f7ed003f713ac2213dfdb19df681c2c"
   integrity sha512-cTNZXR0zmOfSoFhPdE6YrGlFlNS2T0yOV44+OgZDL27sHFUdLvUaH5x6OgZSYbK48giorv97/ITC62MeSZKEwQ==
 
-"@polymer/polymer@^3.0.0", "@polymer/polymer@^3.3.0":
+"@polymer/polymer@^3.0.0", "@polymer/polymer@^3.2.0", "@polymer/polymer@^3.3.0":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@polymer/polymer/-/polymer-3.3.1.tgz#9ad48992d2a96775f80b0673f3a615d6df8a3dfc"
   integrity sha512-8KaB48tzyMjdsHdxo5KvCAaqmTe7rYDzQAoj/pyEfq9Fp4YfUaS+/xqwYj0GbiDAUNzwkmEQ7dw9cgnRNdKO8A==
@@ -1930,10 +1930,10 @@
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
     "@vaadin/vaadin-usage-statistics" "^2.1.0"
 
-"@vaadin/vaadin-themable-mixin@^1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-themable-mixin/-/vaadin-themable-mixin-1.5.2.tgz#3fc4ec1180f8032c8025fe70053deacbeffd7f62"
-  integrity sha512-3EsVOhE5lo/nRyX27+nOyPNsV5TtKInTKirldUqucGZZtcyWT4ZxqAxswIz3bAolnb17UDb8eJKHOH6ERMLEhg==
+"@vaadin/vaadin-themable-mixin@^1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-themable-mixin/-/vaadin-themable-mixin-1.6.1.tgz#febaeea211a23e3a9f060345252bfe101284a469"
+  integrity sha512-UXjOlEfMEk/QxpBjpiO0QTjPOSiO88bhhtV+0UTfpqk8ILvJYO+6vbwcja33xY5Wi9sTAXtHixAjM0LthyXglQ==
   dependencies:
     "@polymer/polymer" "^3.0.0"
     lit-element "^2.0.0"
