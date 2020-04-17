@@ -6,20 +6,6 @@ import { VaadinElement } from '../vaadin-element';
 const { expect } = chai;
 const { sinon } = window;
 
-declare global {
-  interface Window {
-    Vaadin: {
-      developmentModeCallback: {
-        'usage-statistics': () => {};
-      };
-      registrations: Array<{ is: string }>;
-      usageStatsChecker: {
-        maybeGatherAndSend: () => {};
-      };
-    };
-  }
-}
-
 describe('VaadinElement', () => {
   it('should initialize registrations on global Vaadin namespace', () => {
     expect(window.Vaadin.registrations).to.deep.equal([]);
@@ -39,11 +25,11 @@ describe('VaadinElement', () => {
     );
     flush();
 
-    expect(window.Vaadin.registrations[0].is).to.equal('vaadin-foo');
+    expect(window.Vaadin.registrations![0].is).to.equal('vaadin-foo');
   });
 
   it('should collect usage statistics once per class', async () => {
-    const spy = sinon.stub(window.Vaadin.usageStatsChecker, 'maybeGatherAndSend');
+    const spy = sinon.stub(window.Vaadin.usageStatsChecker!, 'maybeGatherAndSend');
 
     class VaadinBar extends VaadinElement {
       static get is() {

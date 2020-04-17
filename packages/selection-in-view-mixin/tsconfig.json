@@ -5,7 +5,6 @@
     "composite": true
   },
   "include": [
-    "single-selection-*.ts",
-    "custom_typings/*.d.ts"
+    "single-selection-*.ts"
   ]
 }
