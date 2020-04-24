@@ -1,6 +1,6 @@
 {
   "name": "@vaadin/selection-in-view-mixin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "repository": {
@@ -16,10 +16,10 @@
   ],
   "dependencies": {
     "@vaadin/direction-mixin": "^0.1.1",
-    "@vaadin/keyboard-direction-mixin": "^0.1.6",
+    "@vaadin/keyboard-direction-mixin": "^0.1.7",
     "@vaadin/mixin-utils": "^0.1.0",
-    "@vaadin/single-selection-mixin": "^0.1.6",
-    "@vaadin/slotted-items-mixin": "^0.1.5",
+    "@vaadin/single-selection-mixin": "^0.1.7",
+    "@vaadin/slotted-items-mixin": "^0.1.6",
     "@vaadin/vaadin-element-mixin": "^2.4.1",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
@@ -29,7 +29,7 @@
     "@vaadin/disabled-state-mixin": "^0.1.1",
     "@vaadin/orientation-mixin": "^0.1.2",
     "@vaadin/selected-state-mixin": "^0.1.2",
-    "@vaadin/test-helpers": "^0.1.4"
+    "@vaadin/test-helpers": "^0.1.5"
   },
   "publishConfig": {
     "access": "public"

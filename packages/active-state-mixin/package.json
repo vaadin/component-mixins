@@ -1,6 +1,6 @@
 {
   "name": "@vaadin/active-state-mixin",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "repository": {
@@ -16,15 +16,15 @@
   ],
   "dependencies": {
     "@vaadin/disabled-state-mixin": "^0.1.1",
-    "@vaadin/down-up-mixin": "^0.1.0",
-    "@vaadin/keyboard-mixin": "^0.1.1",
+    "@vaadin/down-up-mixin": "^0.1.1",
+    "@vaadin/keyboard-mixin": "^0.1.2",
     "@vaadin/mixin-utils": "^0.1.0",
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0"
   },
   "devDependencies": {
     "@open-wc/testing-helpers": "^1.2.1",
-    "@vaadin/test-helpers": "^0.1.4"
+    "@vaadin/test-helpers": "^0.1.5"
   },
   "publishConfig": {
     "access": "public"
