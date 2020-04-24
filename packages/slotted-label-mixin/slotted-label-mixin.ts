@@ -2,7 +2,7 @@ import { LitElement, PropertyValues } from 'lit-element';
 import { Constructor } from '@vaadin/mixin-utils';
 
 const isEmpty = (nodes: Node[]) =>
-  nodes.every(node => node.nodeType === Node.TEXT_NODE && !node.textContent?.trim());
+  nodes.every((node) => node.nodeType === Node.TEXT_NODE && !node.textContent?.trim());
 
 export const SlottedLabelMixin = <T extends Constructor<LitElement>>(base: T): T => {
   class SlottedLabel extends base {

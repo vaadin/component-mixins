@@ -34,11 +34,11 @@ export const SingleSelectionMixin = <
     protected firstUpdated(props: PropertyValues) {
       super.firstUpdated(props);
 
-      this.addEventListener('click', event => {
+      this.addEventListener('click', (event) => {
         this._onClick(event);
       });
 
-      this.addEventListener('keyup', event => {
+      this.addEventListener('keyup', (event) => {
         this._onKeyUp(event);
       });
     }

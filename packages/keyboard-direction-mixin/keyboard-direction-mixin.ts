@@ -78,7 +78,7 @@ export const KeyboardDirectionMixin = <
 
       const { key } = event;
       const { items, focused } = this;
-      const currentIdx = items.findIndex(item => focused === item);
+      const currentIdx = items.findIndex((item) => focused === item);
 
       let idx;
       let increment;

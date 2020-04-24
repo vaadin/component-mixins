@@ -8,9 +8,7 @@ const { sinon } = window;
 @customElement('chm-element')
 class ChmElement extends CheckedStateMixin(LitElement) {
   render() {
-    return html`
-      <div>Content</div>
-    `;
+    return html`<div>Content</div>`;
   }
 }
 
@@ -18,7 +16,7 @@ describe('CheckedStateMixin', () => {
   let element: ChmElement;
 
   beforeEach(async () => {
-    element = await fixture(`<chm-element></ssm-element>`);
+    element = await fixture(html`<chm-element></chm-element>`);
   });
 
   it('should have checked property set to false by default', () => {

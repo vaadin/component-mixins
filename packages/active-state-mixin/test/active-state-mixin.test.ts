@@ -19,9 +19,7 @@ const { expect } = chai;
 @customElement('asm-element')
 class AsmElement extends ActiveStateMixin(DisabledStateMixin(LitElement)) {
   render() {
-    return html`
-      <slot></slot>
-    `;
+    return html`<slot></slot>`;
   }
 
   constructor() {
@@ -34,7 +32,7 @@ describe('ActiveStateMixin', () => {
   let element: AsmElement;
 
   beforeEach(async () => {
-    element = await fixture(`<asm-element>Content</asm-element>`);
+    element = await fixture(html`<asm-element>Content</asm-element>`);
   });
 
   it('should set active attribute on left button mousedown', () => {
@@ -115,7 +113,7 @@ describe('ActiveStateMixin', () => {
   it('should not set active attribute if keydown was prevented', () => {
     const button = document.createElement('button');
     element.appendChild(button);
-    button.addEventListener('keydown', e => {
+    button.addEventListener('keydown', (e) => {
       e.preventDefault();
     });
     enterKeyDown(button);

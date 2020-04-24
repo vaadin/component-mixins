@@ -71,7 +71,7 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
 
       const queries = MediaQuery._mediaQueries;
 
-      Object.keys(queries).forEach(prop => {
+      Object.keys(queries).forEach((prop) => {
         const { query } = queries[prop];
         const handler = () => {
           // allow property modification
@@ -92,7 +92,7 @@ export const MediaQueryMixin = <T extends Constructor<LitElement>>(
 
       const queries = MediaQuery._mediaQueries;
 
-      Object.keys(queries).forEach(prop => {
+      Object.keys(queries).forEach((prop) => {
         const { query } = queries[prop];
         const handler = this._boundQueries[prop];
         query.removeListener(handler);

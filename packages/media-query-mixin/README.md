@@ -5,7 +5,6 @@ This package provides `MediaQueryMixin` and `@mediaProperty` decorator.
 ```ts
 @customElement('mq-basic-element')
 class MyElement extends MediaQueryMixin(LitElement) {
-
   @mediaProperty({ media: '(max-width: 420px)' })
   fullscreen: boolean | null | undefined;
 }

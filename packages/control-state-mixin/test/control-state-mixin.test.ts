@@ -11,9 +11,7 @@ const { sinon } = window;
 @customElement('csm-element')
 class CsmElement extends ControlStateMixin(DisabledStateMixin(FocusVisibleMixin(LitElement))) {
   render() {
-    return html`
-      <input id="input" /><input id="secondInput" />
-    `;
+    return html`<input id="input" /><input id="secondInput" />`;
   }
 
   get focusElement() {
@@ -26,9 +24,7 @@ describe('ControlStateMixin', () => {
   let focusable: HTMLInputElement;
 
   beforeEach(async () => {
-    element = await fixture(html`
-      <csm-element></csm-element>
-    `);
+    element = await fixture(html`<csm-element></csm-element>`);
     focusable = element.focusElement;
   });
 
@@ -182,9 +178,7 @@ describe('autofocus', () => {
   let focusable: HTMLInputElement;
 
   beforeEach(async () => {
-    element = await fixture(html`
-      <csm-element autofocus></csm-element>
-    `);
+    element = await fixture(html`<csm-element autofocus></csm-element>`);
     focusable = element.focusElement;
   });
 
@@ -199,9 +193,7 @@ describe('focused with nested focusable elements', () => {
   @customElement('csm-wrapper')
   class CsmWrapper extends ControlStateMixin(DisabledStateMixin(FocusVisibleMixin(LitElement))) {
     render() {
-      return html`
-        <csm-element id="testElement"></csm-element>
-      `;
+      return html` <csm-element id="testElement"></csm-element> `;
     }
 
     get focusElement() {
@@ -214,9 +206,7 @@ describe('focused with nested focusable elements', () => {
   let focusable: HTMLInputElement;
 
   beforeEach(async () => {
-    wrapper = await fixture(html`
-      <csm-wrapper></csm-wrapper>
-    `);
+    wrapper = await fixture(html`<csm-wrapper></csm-wrapper>`);
     element = wrapper.focusElement;
     await element.updateComplete;
     focusable = element.focusElement;

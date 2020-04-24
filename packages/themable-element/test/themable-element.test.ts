@@ -132,9 +132,7 @@ class LitFoo extends ThemableElement {
   `;
 
   render() {
-    return html`
-      <div part="text" id="text">text</div>
-    `;
+    return html`<div part="text" id="text">text</div>`;
   }
 }
 
@@ -144,9 +142,7 @@ class LitBar extends ThemableElement {
   static is = bar;
 
   render() {
-    return html`
-      <div part="text" id="text">text</div>
-    `;
+    return html`<div part="text" id="text">text</div>`;
   }
 }
 
@@ -162,9 +158,7 @@ class LitOverride extends ThemableElement {
   static is = override;
 
   render() {
-    return html`
-      <div part="text" id="text">text</div>
-    `;
+    return html`<div part="text" id="text">text</div>`;
   }
 }
 

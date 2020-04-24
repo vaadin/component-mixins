@@ -12,9 +12,7 @@ function define(customElementName: string) {
       static is = customElementName;
 
       render() {
-        return html`
-          ${customElementName}
-        `;
+        return html`${customElementName}`;
       }
     }
   );
@@ -41,7 +39,7 @@ describe('registerStyles', () => {
   });
 
   afterEach(() => {
-    attachedInstances.forEach(instance => {
+    attachedInstances.forEach((instance) => {
       document.body.removeChild(instance);
     });
     attachedInstances = [];

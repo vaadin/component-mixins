@@ -18,11 +18,7 @@ describe('VaadinElement', () => {
       }
     }
     customElements.define(VaadinFoo.is, VaadinFoo);
-    await fixture(
-      html`
-        <vaadin-foo></vaadin-foo>
-      `
-    );
+    await fixture(html`<vaadin-foo></vaadin-foo>`);
     flush();
 
     expect(window.Vaadin.registrations![0].is).to.equal('vaadin-foo');
@@ -38,19 +34,11 @@ describe('VaadinElement', () => {
     }
     customElements.define(VaadinBar.is, VaadinBar);
 
-    await fixture(
-      html`
-        <vaadin-bar></vaadin-bar>
-      `
-    );
+    await fixture(html`<vaadin-bar></vaadin-bar>`);
     flush();
     expect(spy.callCount).to.equal(1);
 
-    await fixture(
-      html`
-        <vaadin-bar></vaadin-bar>
-      `
-    );
+    await fixture(html`<vaadin-bar></vaadin-bar>`);
     flush();
     expect(spy.callCount).to.equal(1);
 
@@ -60,11 +48,7 @@ describe('VaadinElement', () => {
       }
     }
     customElements.define(VaadinBaz.is, VaadinBaz);
-    await fixture(
-      html`
-        <vaadin-baz></vaadin-baz>
-      `
-    );
+    await fixture(html`<vaadin-baz></vaadin-baz>`);
     flush();
     expect(spy.callCount).to.equal(2);
   });

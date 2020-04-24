@@ -8,9 +8,7 @@ const { sinon } = window;
 @customElement('dsm-test-element')
 class DsmTestElement extends DisabledStateMixin(LitElement) {
   render() {
-    return html`
-      <div>Content</div>
-    `;
+    return html`<div>Content</div>`;
   }
 }
 
@@ -18,7 +16,7 @@ describe('DisabledStateMixin', () => {
   let element: DsmTestElement;
 
   beforeEach(async () => {
-    element = await fixture(`<dsm-test-element></dsm-test-element>`);
+    element = await fixture(html`<dsm-test-element></dsm-test-element>`);
   });
 
   it('should reflect disabled property value to the corresponding attribute', async () => {

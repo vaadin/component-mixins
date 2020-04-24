@@ -30,7 +30,7 @@ function middleOfNode(node: Element) {
 export function makeTouches(xyList: Array<{ x: number; y: number }>, node: Element): Array<Touch> {
   let id = 0;
 
-  return xyList.map(xy => {
+  return xyList.map((xy) => {
     id += 1;
     const touchInit = { identifier: id, target: node, clientX: xy.x, clientY: xy.y };
 
@@ -75,7 +75,7 @@ export function makeSoloTouchEvent(type: string, coords: { x: number; y: number 
       // Allow event to go outside a ShadowRoot.
       composed: true
     });
-    Object.keys(touchEventInit).forEach(property => {
+    Object.keys(touchEventInit).forEach((property) => {
       // @ts-ignore
       event[property] = touchEventInit[property];
     });

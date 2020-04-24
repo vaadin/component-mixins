@@ -8,9 +8,7 @@ const { expect } = chai;
 @customElement('ssm-element')
 class SsmElement extends SelectedStateMixin(DisabledStateMixin(LitElement)) {
   render() {
-    return html`
-      <div>Content</div>
-    `;
+    return html`<div>Content</div>`;
   }
 }
 
@@ -18,7 +16,7 @@ describe('SelectedStateMixin', () => {
   let element: SsmElement;
 
   beforeEach(async () => {
-    element = await fixture(`<ssm-element></ssm-element>`);
+    element = await fixture(html`<ssm-element></ssm-element>`);
   });
 
   it('should have selected property set to false by default', () => {

@@ -22,7 +22,7 @@ window.matchMedia = (query: string) => {
 };
 
 export const resetMatchMedia = () => {
-  Object.keys(queryMatches).forEach(key => {
+  Object.keys(queryMatches).forEach((key) => {
     delete queryMatches[key];
   });
 };

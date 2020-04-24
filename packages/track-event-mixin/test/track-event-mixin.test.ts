@@ -48,9 +48,7 @@ class TemElement extends TrackEventMixin(LitElement) {
   @property({ attribute: false }) stream: Array<Event | CustomEvent> = [];
 
   render() {
-    return html`
-      <div>Content</div>
-    `;
+    return html`<div>Content</div>`;
   }
 
   firstUpdated(props: PropertyValues) {
@@ -82,10 +80,7 @@ describe('TrackEventMixin', () => {
   const expectEvents = (stream: Array<Event | CustomEvent>, types: string[]) => {
     for (let i = 0; i < stream.length; i += 1) {
       if (stream[i].type === 'track') {
-        expect(stream[i])
-          .to.have.property('detail')
-          .that.has.property('state')
-          .equal(types[i]);
+        expect(stream[i]).to.have.property('detail').that.has.property('state').equal(types[i]);
       } else {
         expect(stream[i].type).to.equal(types[i]);
       }
@@ -296,7 +291,7 @@ describe('TrackEventMixin', () => {
       }
 
       protected get _trackTargets(): Element[] {
-        return (super._trackTargets || []).filter(target => target !== this);
+        return (super._trackTargets || []).filter((target) => target !== this);
       }
 
       protected handle(event: CustomEvent) {

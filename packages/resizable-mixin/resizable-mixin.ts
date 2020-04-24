@@ -37,7 +37,7 @@ export const ResizableMixin = <T extends Constructor<LitElement>>(
 
         // @ts-ignore
         Resizable._resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
-          entries.forEach(entry => {
+          entries.forEach((entry) => {
             (entry.target as Resizable)._sizeChanged(entry.contentRect as DOMRect);
           });
         });

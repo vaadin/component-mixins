@@ -9,9 +9,7 @@ const { sinon } = window;
 @customElement('dum-element')
 class DumElement extends DownUpMixin(LitElement) {
   render() {
-    return html`
-      <div>Content</div>
-    `;
+    return html`<div>Content</div>`;
   }
 
   protected _onDown() {
@@ -26,9 +24,7 @@ class DumElement extends DownUpMixin(LitElement) {
 @customElement('dum-child-element')
 class DumChildElement extends DownUpMixin(LitElement) {
   render() {
-    return html`
-      <div>Content</div>
-    `;
+    return html`<div>Content</div>`;
   }
 
   protected get _downUpTarget() {
@@ -47,9 +43,7 @@ class DumChildElement extends DownUpMixin(LitElement) {
 @customElement('dum-multi-element')
 class DumMultiElement extends DownUpMixin(DownUpMixin(LitElement)) {
   render() {
-    return html`
-      <div>Content</div>
-    `;
+    return html`<div>Content</div>`;
   }
 
   protected _onDown() {
@@ -67,7 +61,7 @@ describe('DownUpMixin', () => {
     let spy: sinon.SinonSpy;
 
     beforeEach(async () => {
-      element = await fixture(`<dum-element></dum-element>`);
+      element = await fixture(html`<dum-element></dum-element>`);
       spy = sinon.spy();
     });
 
@@ -116,7 +110,7 @@ describe('DownUpMixin', () => {
     let spy: sinon.SinonSpy;
 
     beforeEach(async () => {
-      element = await fixture(`<dum-child-element></dum-child-element>`);
+      element = await fixture(html`<dum-child-element></dum-child-element>`);
       target = element.renderRoot.querySelector('div') as HTMLElement;
       spy = sinon.spy();
     });
@@ -159,7 +153,7 @@ describe('DownUpMixin', () => {
     let spy: sinon.SinonSpy;
 
     beforeEach(async () => {
-      element = await fixture(`<dum-multi-element></dum-multi->`);
+      element = await fixture(html`<dum-multi-element></dum-multi-element>`);
       spy = sinon.spy();
     });
 

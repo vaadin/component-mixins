@@ -10,9 +10,7 @@ const RESPONSIVE = '(max-width: 600px)';
 
 class MqElementBase extends MediaQueryMixin(LitElement) {
   render() {
-    return html`
-      <div part="content">Content</div>
-    `;
+    return html`<div part="content">Content</div>`;
   }
 }
 
@@ -30,7 +28,7 @@ describe('MediaQueryMixin', () => {
     });
 
     beforeEach(async () => {
-      element = await fixture(`<mq-basic-element></mq-basic-element>`);
+      element = await fixture(html`<mq-basic-element></mq-basic-element>`);
     });
 
     it('should set default property value based on media query', () => {
@@ -77,7 +75,7 @@ describe('MediaQueryMixin', () => {
     let element: MqCustomElement;
 
     beforeEach(async () => {
-      element = await fixture(`<mq-custom-element></mq-custom-element>`);
+      element = await fixture(html`<mq-custom-element></mq-custom-element>`);
       matchMedia(RESPONSIVE, true);
       await element.updateComplete;
     });
@@ -114,7 +112,7 @@ describe('MediaQueryMixin', () => {
     });
 
     beforeEach(async () => {
-      element = await fixture(`<mq-default-element></mq-default-element>`);
+      element = await fixture(html`<mq-default-element></mq-default-element>`);
     });
 
     it('should ignore user-defined default value', () => {

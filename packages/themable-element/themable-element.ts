@@ -8,8 +8,8 @@ const sortModules = (modules: Array<{ [s: string]: DomModule }>) => {
     const vaadinB = moduleNameB.indexOf('vaadin-') === 0;
 
     const prefixes = ['lumo-', 'material-'];
-    const vaadinThemeA = prefixes.filter(p => moduleNameA.indexOf(p) === 0).length > 0;
-    const vaadinThemeB = prefixes.filter(p => moduleNameB.indexOf(p) === 0).length > 0;
+    const vaadinThemeA = prefixes.filter((p) => moduleNameA.indexOf(p) === 0).length > 0;
+    const vaadinThemeB = prefixes.filter((p) => moduleNameB.indexOf(p) === 0).length > 0;
 
     let result;
 
@@ -38,7 +38,7 @@ export class ThemableElement extends LitElement {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { modules } = DomModule.prototype as any;
 
-    sortModules(modules).forEach(moduleName => {
+    sortModules(modules).forEach((moduleName) => {
       const themeFor = modules[moduleName].getAttribute('theme-for');
       if (themeFor) {
         themeFor.split(' ').forEach((themeForToken: string) => {

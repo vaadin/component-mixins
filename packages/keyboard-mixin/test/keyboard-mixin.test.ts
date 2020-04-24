@@ -11,9 +11,7 @@ const Base = KeyboardMixin(LitElement);
 @customElement('km-element')
 class KmElement extends KeyboardMixin(Base) {
   render() {
-    return html`
-      Content
-    `;
+    return html`Content`;
   }
 
   constructor() {
@@ -34,7 +32,7 @@ describe('KeyboardMixin', () => {
   let element: KmElement;
 
   beforeEach(async () => {
-    element = await fixture(`<km-element></km-element>`);
+    element = await fixture(html`<km-element></km-element>`);
   });
 
   it('should only invoke keydown event handler once', () => {

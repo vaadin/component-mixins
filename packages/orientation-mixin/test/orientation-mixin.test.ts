@@ -7,9 +7,7 @@ const { expect } = chai;
 @customElement('om-element')
 class OmElement extends OrientationMixin(LitElement) {
   render() {
-    return html`
-      <div>Content</div>
-    `;
+    return html`<div>Content</div>`;
   }
 }
 
@@ -17,7 +15,7 @@ describe('OrientationMixin', () => {
   let element: OmElement;
 
   beforeEach(async () => {
-    element = await fixture(`<om-element></om-element>`);
+    element = await fixture(html`<om-element></om-element>`);
   });
 
   it('should not have orientation property set by default', () => {

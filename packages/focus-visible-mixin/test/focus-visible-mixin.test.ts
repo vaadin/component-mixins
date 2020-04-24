@@ -8,9 +8,7 @@ const { expect } = chai;
 @customElement('fvm-element')
 class FvmElement extends FocusVisibleMixin(LitElement) {
   render() {
-    return html`
-      <slot></slot>
-    `;
+    return html`<slot></slot>`;
   }
 }
 
@@ -19,7 +17,7 @@ describe('FocusVisibleMixin', () => {
 
   describe('autofocus', () => {
     beforeEach(async () => {
-      element = await fixture(`<fvm-element autofocus></fvm-element>`);
+      element = await fixture(html`<fvm-element autofocus></fvm-element>`);
     });
 
     it('should have focused and focus-ring set', async () => {
@@ -43,7 +41,7 @@ describe('FocusVisibleMixin', () => {
 
   describe('focused', () => {
     beforeEach(async () => {
-      element = await fixture(`<fvm-element></fvm-element>`);
+      element = await fixture(html`<fvm-element></fvm-element>`);
     });
 
     it('should set focused attribute on focusin event dispatched', () => {
@@ -66,7 +64,7 @@ describe('FocusVisibleMixin', () => {
 
   describe('focus-ring', () => {
     beforeEach(async () => {
-      element = await fixture(`<fvm-element></fvm-element>`);
+      element = await fixture(html`<fvm-element></fvm-element>`);
     });
 
     it('should set the focus-ring attribute when Tab is pressed and focus is received', () => {

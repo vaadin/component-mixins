@@ -19,18 +19,14 @@ const { sinon } = window;
 @customElement('ssm-item')
 class SsmItem extends SelectedStateMixin(DisabledStateMixin(LitElement)) {
   render() {
-    return html`
-      <slot></slot>
-    `;
+    return html`<slot></slot>`;
   }
 }
 
 @customElement('ssm-list')
 class SsmList extends SingleSelectionMixin(SlottedItemsMixin(LitElement)) {
   render() {
-    return html`
-      <slot></slot>
-    `;
+    return html`<slot></slot>`;
   }
 }
 
@@ -60,13 +56,13 @@ describe('SingleSelectionMixin', () => {
 
   it('should only add selectable components to items', () => {
     expect(items.length).to.equal(3);
-    items.forEach(item => {
+    items.forEach((item) => {
       expect(item.tagName.toLowerCase()).to.equal('ssm-item');
     });
   });
 
   it('should not select any item by default', () => {
-    items.forEach(item => expect(item.selected).to.be.false);
+    items.forEach((item) => expect(item.selected).to.be.false);
   });
 
   it('should select an item when `selected` property is set', async () => {

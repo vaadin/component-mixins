@@ -9,9 +9,12 @@ The API provided by `@vaadin/vaadin-themable-mixin` should be used to register s
 ```js
 import { registerStyles, css } from '@vaadin/vaadin-themable-mixin/register-styles.js';
 
-registerStyles('my-lit-element', css`
-  /* Styles which will be included in my-element local scope */
-`);
+registerStyles(
+  'my-lit-element',
+  css`
+    /* Styles which will be included in my-element local scope */
+  `
+);
 ```
 
 The `registerStyles` helper uses `DomModule` from Polymer 3 internally. This is needed in order to
