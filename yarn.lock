@@ -1921,10 +1921,10 @@
   resolved "https://registry.yarnpkg.com/@vaadin/vaadin-development-mode-detector/-/vaadin-development-mode-detector-2.0.4.tgz#f49c8009856bead92d248377c36b295b5aae78e5"
   integrity sha512-S+PaFrZpK8uBIOnIHxjntTrgumd5ztuCnZww96ydGKXgo9whXfZsbMwDuD/102a/IuPUMyF+dh/n3PbWzJ6igA==
 
-"@vaadin/vaadin-element-mixin@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-element-mixin/-/vaadin-element-mixin-2.4.0.tgz#363b25ec322456a0077c35155230d1d69d8b61ea"
-  integrity sha512-5iTKcoW++uPKDZId0g1r9tlr5dC1KPCEYqWBtbne+AvUnEzpcnZRQ2bZTK4Nv49GiAAhlfe5pmNIibGaQKRpZQ==
+"@vaadin/vaadin-element-mixin@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@vaadin/vaadin-element-mixin/-/vaadin-element-mixin-2.4.1.tgz#af65828a33169cb45ef2889aa7efe62a5bcd0db4"
+  integrity sha512-Ie7fwcOmg1C71UFuRwcuo2GKS+HbKvLedfs3hGdICiuwJ56cQvQsbIlxa4utKWWCVlf6yuSvMrny8efPPenfTA==
   dependencies:
     "@polymer/polymer" "^3.0.0"
     "@vaadin/vaadin-development-mode-detector" "^2.0.0"
