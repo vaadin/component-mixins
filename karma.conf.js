@@ -69,7 +69,7 @@ module.exports = config => {
       'karma-*'
     ],
 
-    reporters: ['mocha', 'coverage-istanbul'],
+    reporters: ['mocha', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -78,11 +78,9 @@ module.exports = config => {
       showDiff: true
     },
 
-    coverageIstanbulReporter: {
-      reports: ['html', 'lcovonly', 'text-summary'],
+    coverageReporter: {
+      reporters: [{ type: 'html' }, { type: 'lcovonly' }, { type: 'text-summary' }],
       dir: 'coverage',
-      combineBrowserReports: true,
-      skipFilesWithNoCoverage: true,
       thresholds: {
         global: {
           statements: 90,
