@@ -19,7 +19,7 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@commitlint/config-lerna-scopes": "^11.0.0",
-    "@open-wc/karma-esm": "^2.9.0",
+    "@open-wc/karma-esm": "^3.0.5",
     "@types/chai": "^4.2.12",
     "@types/mocha": "^7.0.2",
     "@types/sinon": "^9.0.5",
