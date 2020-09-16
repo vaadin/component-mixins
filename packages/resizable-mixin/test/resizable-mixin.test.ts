@@ -53,15 +53,14 @@ describe('ResizableMixin', () => {
   });
 
   describe('DOM manipulations', () => {
-    let spy: unknown;
+    let spy: sinon.SinonSpy;
 
-    afterEach(() => {
-      (spy as sinon.SinonSpy).restore();
+    before(() => {
+      spy = sinon.spy(element.observer, 'observe');
     });
 
     it('should not observe element when immediately removed', async () => {
       element = document.createElement('rm-element') as RmElement;
-      spy = sinon.spy(element.observer, 'observe');
       document.body.appendChild(element);
       document.body.removeChild(element);
       await Promise.resolve();
@@ -72,7 +71,6 @@ describe('ResizableMixin', () => {
       parent = document.createElement('div');
       document.body.appendChild(parent);
       element = document.createElement('rm-element') as RmElement;
-      spy = sinon.spy(element.observer, 'observe');
       parent.appendChild(element);
       document.body.removeChild(parent);
       await Promise.resolve();
