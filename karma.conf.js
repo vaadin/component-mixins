@@ -2,17 +2,22 @@ const USING_TRAVIS = Boolean(process.env.TRAVIS);
 const USING_SAUCE = process.env.TEST_PLATFORM === 'sauce';
 
 const SL_LAUNCHERS = {
+  /*
   'sl-safari-latest': {
     base: 'SauceLabs',
     browserName: 'safari',
     platform: 'macOS 10.13',
     version: 'latest'
   },
+  */
   'sl-ios-13': {
     base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'iPhone X Simulator',
-    version: '13.0'
+    browserName: 'Safari',
+    deviceName: 'iPhone X Simulator',
+    platformVersion: '13.0',
+    platformName: 'iOS',
+    appiumVersion: '1.17.1',
+    deviceOrientation: 'portrait'
   }
 };
 
@@ -36,7 +41,7 @@ function determineBrowsers() {
   return [...Object.keys(USING_SAUCE ? SL_LAUNCHERS : HEADLESS_LAUNCHERS)];
 }
 
-module.exports = config => {
+module.exports = (config) => {
   config.set({
     basePath: '',
     frameworks: ['esm', 'mocha', 'sinon-chai', 'source-map-support'],
