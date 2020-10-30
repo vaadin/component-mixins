@@ -5,7 +5,7 @@ const SL_LAUNCHERS = {
   'sl-safari-latest': {
     base: 'SauceLabs',
     browserName: 'safari',
-    platform: 'macOS 10.13',
+    platform: 'macOS 10.14',
     version: 'latest'
   },
   'sl-ios-13': {
